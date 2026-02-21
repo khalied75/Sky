@@ -1,0 +1,142 @@
+<!-- navbar.html -->
+<!-- القائمة الجانبية للموبايل -->
+<div class="mobile-menu" id="mobileMenu">
+    <div class="flex justify-between items-center mb-8">
+        <h2 class="text-2xl font-bold text-yellow-400">القائمة</h2>
+        <button onclick="closeMobileMenu()" class="text-white text-2xl w-12 h-12 flex items-center justify-center hover:bg-yellow-500/20 rounded-full transition">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    
+    <nav class="flex flex-col gap-4">
+        <a href="index.html" class="text-white text-lg py-2 px-4 rounded-lg hover:bg-yellow-500/20 transition flex items-center gap-3" onclick="closeMobileMenu()">
+            <i class="fas fa-home text-yellow-400 w-6"></i> الرئيسية
+        </a>
+        <a href="constellations.html" class="text-white text-lg py-2 px-4 rounded-lg hover:bg-yellow-500/20 transition flex items-center gap-3" onclick="closeMobileMenu()">
+            <i class="fas fa-star text-yellow-400 w-6"></i> الكوكبات
+        </a>
+        <a href="stars.html" class="text-white text-lg py-2 px-4 rounded-lg hover:bg-yellow-500/20 transition flex items-center gap-3" onclick="closeMobileMenu()">
+            <i class="fas fa-sun text-yellow-400 w-6"></i> النجوم
+        </a>
+        <a href="nebulae.html" class="text-white text-lg py-2 px-4 rounded-lg hover:bg-yellow-500/20 transition flex items-center gap-3" onclick="closeMobileMenu()">
+            <i class="fas fa-cloud text-yellow-400 w-6"></i> السدم
+        </a>
+        <a href="galaxies.html" class="text-white text-lg py-2 px-4 rounded-lg hover:bg-yellow-500/20 transition flex items-center gap-3" onclick="closeMobileMenu()">
+            <i class="fas fa-galaxy text-yellow-400 w-6"></i> المجرات
+        </a>
+    </nav>
+</div>
+
+<!-- الناف بار الرئيسي -->
+<nav class="glass-nav sticky top-0 z-30 border-b border-yellow-500/20">
+    <div class="container mx-auto px-4">
+        <div class="flex justify-between items-center h-16">
+            <!-- الشعار -->
+            <div class="flex items-center gap-3">
+                <i class="fas fa-meteor text-yellow-400 text-2xl star-glow"></i>
+                <a href="index.html" class="text-xl font-bold text-white">
+                    <span class="text-yellow-400">الفلك</span> بيديا
+                </a>
+            </div>
+            
+            <!-- القائمة الرئيسية -->
+            <div class="hidden md:flex items-center gap-1">
+                <a href="index.html" class="text-gray-300 hover:text-yellow-400 px-3 py-2 rounded-lg transition">الرئيسية</a>
+                <a href="constellations.html" class="text-gray-300 hover:text-yellow-400 px-3 py-2 rounded-lg transition">الكوكبات</a>
+                <a href="stars.html" class="text-gray-300 hover:text-yellow-400 px-3 py-2 rounded-lg transition">النجوم</a>
+                <a href="nebulae.html" class="text-gray-300 hover:text-yellow-400 px-3 py-2 rounded-lg transition">السدم</a>
+                <a href="galaxies.html" class="text-gray-300 hover:text-yellow-400 px-3 py-2 rounded-lg transition">المجرات</a>
+            </div>
+            
+            <!-- الأيقونات -->
+            <div class="flex items-center gap-3">
+                <button onclick="toggleSearch()" class="hidden md:block text-white hover:text-yellow-400 text-xl">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button onclick="openMobileMenu()" class="md:hidden text-white text-2xl">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<style>
+.glass-nav {
+    background: rgba(5, 10, 20, 0.95);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(255, 215, 0, 0.15);
+}
+
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 85%;
+    max-width: 350px;
+    height: 100vh;
+    background: rgba(5, 10, 20, 0.98);
+    backdrop-filter: blur(20px);
+    z-index: 1000;
+    transition: right 0.3s ease;
+    padding: 25px 20px;
+}
+
+.mobile-menu.open { right: 0; }
+
+.mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 999;
+    display: none;
+}
+
+.mobile-menu-overlay.open { display: block; }
+
+body.menu-open { overflow: hidden; }
+
+.star-glow {
+    filter: drop-shadow(0 0 8px #ffd700);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.1); }
+}
+</style>
+
+<script>
+window.openMobileMenu = function() {
+    document.getElementById('mobileMenu').classList.add('open');
+    let overlay = document.getElementById('menuOverlay');
+    if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.className = 'mobile-menu-overlay';
+        overlay.id = 'menuOverlay';
+        overlay.onclick = closeMobileMenu;
+        document.body.appendChild(overlay);
+    }
+    setTimeout(() => overlay.classList.add('open'), 10);
+    document.body.classList.add('menu-open');
+}
+
+window.closeMobileMenu = function() {
+    document.getElementById('mobileMenu').classList.remove('open');
+    const overlay = document.getElementById('menuOverlay');
+    if (overlay) {
+        overlay.classList.remove('open');
+        setTimeout(() => overlay.remove(), 300);
+    }
+    document.body.classList.remove('menu-open');
+}
+
+window.toggleSearch = function() {
+    alert('قريباً - خاصية البحث');
+}
+</script>
