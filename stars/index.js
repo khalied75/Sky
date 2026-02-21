@@ -1,94 +1,112 @@
-  // بيانات الكوكبات الـ 88 الكاملة
-        const constellationsData = [
-            // الكوكبات الشمالية (36)
-            { id: 1, name: 'المرأة المسلسلة', nameEn: 'Andromeda', region: 'northern', category: 'myth', stars: 6, brightness: '3.1', description: 'تمثل الأميرة أندروميدا في الأساطير اليونانية.', famousStars: ['المرأة المسلسلة'] },
-            { id: 2, name: 'ممسك الأعنة', nameEn: 'Auriga', region: 'northern', category: 'myth', stars: 5, brightness: '2.7', description: 'يمثل حامل الأعنة أو العربة.', famousStars: ['العيوق'] },
-            { id: 3, name: 'العواء', nameEn: 'Bootes', region: 'northern', category: 'myth', stars: 7, brightness: '2.4', description: 'يمثل الراعي أو الحارس.', famousStars: ['السماك الرامح'] },
-            { id: 4, name: 'الهلبة', nameEn: 'Coma Berenices', region: 'northern', category: 'myth', stars: 3, brightness: '4.3', description: 'شعر برنيس، ملكة مصر القديمة.', famousStars: [] },
-            { id: 5, name: 'الإكليل الشمالي', nameEn: 'Corona Borealis', region: 'northern', category: 'myth', stars: 5, brightness: '3.8', description: 'التاج الشمالي.', famousStars: ['الفكة'] },
-            { id: 6, name: 'الدجاجة', nameEn: 'Cygnus', region: 'northern', category: 'myth', stars: 9, brightness: '2.2', description: 'يمثل البجعة أو الدجاجة.', famousStars: ['النسر الواقع', 'ذنب الدجاجة'] },
-            { id: 7, name: 'الدلفين', nameEn: 'Delphinus', region: 'northern', category: 'water', stars: 5, brightness: '3.8', description: 'كوكبة صغيرة على شكل دلفين.', famousStars: [] },
-            { id: 8, name: 'التنين', nameEn: 'Draco', region: 'northern', category: 'myth', stars: 14, brightness: '3.7', description: 'التنين الذي كان يحرس التفاح الذهبي.', famousStars: ['التنين'] },
-            { id: 9, name: 'قطعة الفرس', nameEn: 'Equuleus', region: 'northern', category: 'myth', stars: 4, brightness: '4.7', description: 'أصغر كوكبة في السماء (رأس الحصان).', famousStars: [] },
-            { id: 10, name: 'الجبار', nameEn: 'Orion', region: 'northern', category: 'famous', stars: 12, brightness: '1.5', description: 'أشهر كوكبة في السماء، يمثل الصياد.', famousStars: ['منكب الجوزاء', 'رجل الجبار', 'النظام', 'النطاق'] },
-            { id: 11, name: 'الفرس الأعظم', nameEn: 'Pegasus', region: 'northern', category: 'myth', stars: 9, brightness: '2.8', description: 'الحصان المجنح في الأساطير.', famousStars: ['الفرس الأعظم'] },
-            { id: 12, name: 'فرساوس', nameEn: 'Perseus', region: 'northern', category: 'myth', stars: 6, brightness: '3.0', description: 'البطل الذي أنقذ أندروميدا.', famousStars: ['رأس الغول'] },
-            { id: 13, name: 'السهم', nameEn: 'Sagitta', region: 'northern', category: 'myth', stars: 4, brightness: '4.5', description: 'كوكبة صغيرة على شكل سهم.', famousStars: [] },
-            { id: 14, name: 'العقرب', nameEn: 'Scorpius', region: 'southern', category: 'zodiac', stars: 15, brightness: '1.8', description: 'يمثل العقرب الذي قتل الجبار.', famousStars: ['القلب', 'الشولة'] },
-            { id: 15, name: 'الثعبان', nameEn: 'Serpens', region: 'northern', category: 'myth', stars: 8, brightness: '3.7', description: 'الثعبان الذي يحمله الحواء.', famousStars: [] },
-            { id: 16, name: 'الثعلب', nameEn: 'Vulpecula', region: 'northern', category: 'animal', stars: 5, brightness: '4.4', description: 'كوكبة صغيرة على شكل ثعلب.', famousStars: [] },
-            { id: 17, name: 'الوشق', nameEn: 'Lynx', region: 'northern', category: 'animal', stars: 4, brightness: '4.5', description: 'كوكبة خافتة تحتاج لعين الوشق لرؤيتها.', famousStars: [] },
-            { id: 18, name: 'الأسد', nameEn: 'Leo', region: 'northern', category: 'zodiac', stars: 10, brightness: '2.0', description: 'الأسد في الأساطير.', famousStars: ['قلب الأسد'] },
-            { id: 19, name: 'الأسد الأصغر', nameEn: 'Leo Minor', region: 'northern', category: 'animal', stars: 3, brightness: '4.4', description: 'كوكبة صغيرة شمال الأسد.', famousStars: [] },
-            { id: 20, name: 'الكلب الصيد', nameEn: 'Canes Venatici', region: 'northern', category: 'animal', stars: 2, brightness: '4.2', description: 'كلاب الصيد.', famousStars: ['قلب شارلز'] },
-            { id: 21, name: 'العذراء', nameEn: 'Virgo', region: 'northern', category: 'zodiac', stars: 12, brightness: '2.1', description: 'العذراء أو الإلهة ديميتر.', famousStars: ['السماك الأعزل'] },
-            { id: 22, name: 'الجاثي', nameEn: 'Hercules', region: 'northern', category: 'myth', stars: 14, brightness: '3.2', description: 'البطل هرقل.', famousStars: ['رأس الجاثي'] },
-            { id: 23, name: 'القيثارة', nameEn: 'Lyra', region: 'northern', category: 'myth', stars: 5, brightness: '2.5', description: 'قيثارة أورفيوس.', famousStars: ['النسر الواقع'] },
-            { id: 24, name: 'ذات الكرسي', nameEn: 'Cassiopeia', region: 'northern', category: 'myth', stars: 7, brightness: '2.5', description: 'الملكة كاسيوبيا.', famousStars: ['شيدير', 'كف'] },
-            { id: 25, name: 'الملتهب', nameEn: 'Cepheus', region: 'northern', category: 'myth', stars: 7, brightness: '3.6', description: 'الملك سيفيوس.', famousStars: ['الملتهب'] },
-            { id: 26, name: 'الدب الأكبر', nameEn: 'Ursa Major', region: 'northern', category: 'ursa', stars: 20, brightness: '1.8', description: 'الدبة الكبرى، تحتوي على بنات نعش.', famousStars: ['الدبة', 'المراق', 'مجر', 'عناق'] },
-            { id: 27, name: 'الدب الأصغر', nameEn: 'Ursa Minor', region: 'northern', category: 'ursa', stars: 7, brightness: '2.5', description: 'الدبة الصغرى، يحتوي على النجم القطبي.', famousStars: ['القطب الشمالي', 'كوخاب'] },
-            { id: 28, name: 'الزرافة', nameEn: 'Camelopardalis', region: 'northern', category: 'animal', stars: 4, brightness: '4.3', description: 'كوكبة كبيرة لكنها خافتة.', famousStars: [] },
-            { id: 29, name: 'الحواء', nameEn: 'Ophiuchus', region: 'northern', category: 'myth', stars: 11, brightness: '2.7', description: 'حامل الثعبان.', famousStars: ['الحواء'] },
-            { id: 30, name: 'الراقص', nameEn: 'Lacerta', region: 'northern', category: 'animal', stars: 5, brightness: '4.5', description: 'السحلية.', famousStars: [] },
-            { id: 31, name: 'مثلث الصيف', nameEn: 'Triangulum', region: 'northern', category: 'shape', stars: 3, brightness: '4.0', description: 'مثلث صغير.', famousStars: [] },
-            { id: 32, name: 'المجمرة', nameEn: 'Ara', region: 'southern', category: 'myth', stars: 5, brightness: '3.6', description: 'مذبح الآلهة.', famousStars: [] },
+   // بيانات النجوم مع ألوانها المختلفة
+        const starsData = [
+            // النجوم الحمراء العملاقة
+            { id: 1, name: 'منكب الجوزاء', nameEn: 'Betelgeuse', type: 'red', class: 'M', temp: '3,500°C', magnitude: '0.45', distance: '640 سنة ضوئية', constellation: 'الجبار', description: 'نجم عملاق أحمر في كوكبة الجبار، يقترب من نهاية حياته.', color: 'red', luminosity: '100,000 شمس' },
+            { id: 2, name: 'القلب', nameEn: 'Antares', type: 'red', class: 'M', temp: '3,400°C', magnitude: '0.96', distance: '550 سنة ضوئية', constellation: 'العقرب', description: 'قلب العقرب، نجم عملاق أحمر لامع.', color: 'red', luminosity: '65,000 شمس' },
+            { id: 3, name: 'رأس الغول', nameEn: 'Algol', type: 'binary', class: 'B', temp: '12,000°C', magnitude: '2.12', distance: '93 سنة ضوئية', constellation: 'فرساوس', description: 'نجم ثنائي خافق، يخفت ويلمع كل 2.87 يوم.', color: 'blue', luminosity: '100 شمس' },
             
-            // الكوكبات الجنوبية (52) - سأضيف بعضها هنا، وباقيها بنفس النمط
-            { id: 33, name: 'الطائر', nameEn: 'Apus', region: 'southern', category: 'animal', stars: 4, brightness: '4.8', description: 'طائر الجنة.', famousStars: [] },
-            { id: 34, name: 'الحوت', nameEn: 'Pisces', region: 'northern', category: 'zodiac', stars: 8, brightness: '4.2', description: 'الحوتان في الأساطير.', famousStars: [] },
-            { id: 35, name: 'الحوت الجنوبي', nameEn: 'Piscis Austrinus', region: 'southern', category: 'water', stars: 5, brightness: '3.5', description: 'الحوت الجنوبي.', famousStars: ['الضفدع الأول'] },
-            { id: 36, name: 'قيطس', nameEn: 'Cetus', region: 'southern', category: 'water', stars: 8, brightness: '3.6', description: 'وحش البحر.', famousStars: ['الضفدع الثاني'] },
-            { id: 37, name: 'النهر', nameEn: 'Eridanus', region: 'southern', category: 'water', stars: 12, brightness: '3.3', description: 'نهر إريدانوس.', famousStars: ['آخر النهر'] },
-            { id: 38, name: 'الكركي', nameEn: 'Grus', region: 'southern', category: 'animal', stars: 5, brightness: '3.5', description: 'طائر الكركي.', famousStars: ['الطائر'] },
-            { id: 39, name: 'الساعة', nameEn: 'Horologium', region: 'southern', category: 'object', stars: 4, brightness: '4.9', description: 'الساعة.', famousStars: [] },
-            { id: 40, name: 'الثمن', nameEn: 'Octans', region: 'southern', category: 'object', stars: 3, brightness: '5.0', description: 'الثمن (آلة ملاحية).', famousStars: ['القطب الجنوبي'] },
-            { id: 41, name: 'الطاووس', nameEn: 'Pavo', region: 'southern', category: 'animal', stars: 5, brightness: '3.5', description: 'الطاووس.', famousStars: ['الطاووس'] },
-            { id: 42, name: 'العنقاء', nameEn: 'Phoenix', region: 'southern', category: 'myth', stars: 5, brightness: '3.4', description: 'طائر الفينيق.', famousStars: ['العنقاء'] },
-            { id: 43, name: 'المرسمة', nameEn: 'Pictor', region: 'southern', category: 'object', stars: 3, brightness: '5.0', description: 'مرسم الرسام.', famousStars: [] },
-            { id: 44, name: 'المجهر', nameEn: 'Microscopium', region: 'southern', category: 'object', stars: 4, brightness: '4.9', description: 'المجهر.', famousStars: [] },
-            { id: 45, name: 'الشجاع', nameEn: 'Hydra', region: 'southern', category: 'water', stars: 15, brightness: '3.5', description: 'أكبر كوكبة في السماء.', famousStars: ['قلب الشجاع'] },
-            { id: 46, name: 'الباطية', nameEn: 'Crater', region: 'southern', category: 'myth', stars: 4, brightness: '4.2', description: 'كأس أبولو.', famousStars: [] },
-            { id: 47, name: 'الغراب', nameEn: 'Corvus', region: 'southern', category: 'animal', stars: 4, brightness: '3.7', description: 'الغراب.', famousStars: [] },
-            { id: 48, name: 'قنطورس', nameEn: 'Centaurus', region: 'southern', category: 'myth', stars: 11, brightness: '2.0', description: 'القنطور الحكيم.', famousStars: ['رجل قنطورس', 'الظليم'] },
-            { id: 49, name: 'الذئب', nameEn: 'Lupus', region: 'southern', category: 'animal', stars: 6, brightness: '3.5', description: 'الذئب.', famousStars: [] },
-            { id: 50, name: 'المذبح', nameEn: 'Ara', region: 'southern', category: 'myth', stars: 5, brightness: '3.6', description: 'المذبح.', famousStars: [] },
-            { id: 51, name: 'الإكليل الجنوبي', nameEn: 'Corona Australis', region: 'southern', category: 'myth', stars: 5, brightness: '4.1', description: 'التاج الجنوبي.', famousStars: [] },
-            { id: 52, name: 'الرامي', nameEn: 'Sagittarius', region: 'southern', category: 'zodiac', stars: 12, brightness: '2.6', description: 'القوس، يمثل سنتور يحمل قوساً.', famousStars: ['الرامي'] },
-            { id: 53, name: 'التلسكوب', nameEn: 'Telescopium', region: 'southern', category: 'object', stars: 4, brightness: '5.0', description: 'التلسكوب.', famousStars: [] },
-            { id: 54, name: 'الهندي', nameEn: 'Indus', region: 'southern', category: 'myth', stars: 4, brightness: '4.5', description: 'يمثل رجلاً هندياً.', famousStars: [] },
-            { id: 55, name: 'الطوقان', nameEn: 'Tucana', region: 'southern', category: 'animal', stars: 4, brightness: '3.8', description: 'طائر الطوقان.', famousStars: ['الطوقان'] },
-            { id: 56, name: 'الجبل', nameEn: 'Mensa', region: 'southern', category: 'object', stars: 3, brightness: '5.1', description: 'جبل الطاولة.', famousStars: [] },
-            { id: 57, name: 'الذبابة', nameEn: 'Musca', region: 'southern', category: 'animal', stars: 4, brightness: '4.0', description: 'الذبابة.', famousStars: [] },
-            { id: 58, name: 'الحرباء', nameEn: 'Chamaeleon', region: 'southern', category: 'animal', stars: 4, brightness: '4.5', description: 'الحرباء.', famousStars: [] },
-            { id: 59, name: 'السمكة الطائرة', nameEn: 'Volans', region: 'southern', category: 'animal', stars: 4, brightness: '4.5', description: 'السمكة الطائرة.', famousStars: [] },
-            { id: 60, name: 'أبو سيف', nameEn: 'Dorado', region: 'southern', category: 'animal', stars: 4, brightness: '4.3', description: 'سمكة أبو سيف.', famousStars: [] },
-            { id: 61, name: 'الجدول', nameEn: 'Reticulum', region: 'southern', category: 'object', stars: 4, brightness: '4.8', description: 'شبكة المقراب.', famousStars: [] },
-            { id: 62, name: 'آلة النقاش', nameEn: 'Caelum', region: 'southern', category: 'object', stars: 4, brightness: '5.0', description: 'آلة النقش.', famousStars: [] },
-            { id: 63, name: 'المعلمة', nameEn: 'Antlia', region: 'southern', category: 'object', stars: 3, brightness: '5.0', description: 'المضخة الهوائية.', famousStars: [] },
-            { id: 64, name: 'البيطار', nameEn: 'Fornax', region: 'southern', category: 'object', stars: 3, brightness: '5.0', description: 'الفرن الكيميائي.', famousStars: [] },
-            { id: 65, name: 'الكور', nameEn: 'Pyxis', region: 'southern', category: 'object', stars: 4, brightness: '4.5', description: 'بوصلة السفينة.', famousStars: [] },
-            { id: 66, name: 'الشراع', nameEn: 'Vela', region: 'southern', category: 'object', stars: 6, brightness: '2.5', description: 'شراع السفينة.', famousStars: ['الشراع'] },
-            { id: 67, name: 'الرأس', nameEn: 'Caelum', region: 'southern', category: 'object', stars: 4, brightness: '5.0', description: 'رأس النحات.', famousStars: [] },
-            { id: 68, name: 'النحات', nameEn: 'Sculptor', region: 'southern', category: 'object', stars: 4, brightness: '4.9', description: 'ورشة النحات.', famousStars: [] },
-            { id: 69, name: 'الكرسي', nameEn: 'Sculptor', region: 'southern', category: 'object', stars: 4, brightness: '4.9', description: 'كرسي النحات.', famousStars: [] }
+            // النجوم الزرقاء
+            { id: 4, name: 'رجل الجبار', nameEn: 'Rigel', type: 'blue', class: 'B', temp: '12,100°C', magnitude: '0.18', distance: '860 سنة ضوئية', constellation: 'الجبار', description: 'ألمع نجم في كوكبة الجبار، عملاق أزرق.', color: 'blue', luminosity: '120,000 شمس' },
+            { id: 5, name: 'النسر الواقع', nameEn: 'Vega', type: 'blue', class: 'A', temp: '9,600°C', magnitude: '0.03', distance: '25 سنة ضوئية', constellation: 'القيثارة', description: 'خامس ألمع نجم في السماء.', color: 'blue', luminosity: '40 شمس' },
+            { id: 6, name: 'النسر الطائر', nameEn: 'Altair', type: 'white', class: 'A', temp: '7,700°C', magnitude: '0.77', distance: '16.7 سنة ضوئية', constellation: 'النسر', description: 'نجم أبيض سريع الدوران.', color: 'white', luminosity: '11 شمس' },
+            
+            // النجوم الصفراء (مثل الشمس)
+            { id: 7, name: 'الشمس', nameEn: 'Sun', type: 'yellow', class: 'G', temp: '5,778°C', magnitude: '-26.74', distance: '0 سنة ضوئية', constellation: '--', description: 'نجمنا الأم، قلب المجموعة الشمسية.', color: 'yellow', luminosity: '1 شمس' },
+            { id: 8, name: 'القطب الشمالي', nameEn: 'Polaris', type: 'yellow', class: 'F', temp: '6,000°C', magnitude: '1.98', distance: '433 سنة ضوئية', constellation: 'الدب الأصغر', description: 'نجم الشمال، يستخدم للملاحة.', color: 'yellow', luminosity: '2,500 شمس' },
+            { id: 9, name: 'الدبران', nameEn: 'Aldebaran', type: 'orange', class: 'K', temp: '4,000°C', magnitude: '0.85', distance: '65 سنة ضوئية', constellation: 'الثور', description: 'عين الثور، عملاق برتقالي.', color: 'orange', luminosity: '425 شمس' },
+            
+            // النجوم البيضاء
+            { id: 10, name: 'الشعرى اليمانية', nameEn: 'Sirius', type: 'white', class: 'A', temp: '9,940°C', magnitude: '-1.46', distance: '8.6 سنة ضوئية', constellation: 'الكلب الأكبر', description: 'ألمع نجم في السماء الليلية.', color: 'white', luminosity: '25 شمس' },
+            { id: 11, name: 'النظام', nameEn: 'Alnilam', type: 'blue', class: 'B', temp: '27,000°C', magnitude: '1.64', distance: '1,300 سنة ضوئية', constellation: 'الجبار', description: 'النجم الأوسط في حزام الجبار.', color: 'blue', luminosity: '375,000 شمس' },
+            
+            // نجوم برتقالية
+            { id: 12, name: 'آخر النهر', nameEn: 'Achernar', type: 'blue', class: 'B', temp: '15,000°C', magnitude: '0.46', distance: '139 سنة ضوئية', constellation: 'النهر', description: 'أسرع نجم دوراناً.', color: 'blue', luminosity: '3,000 شمس' },
+            { id: 13, name: 'سهيل', nameEn: 'Canopus', type: 'white', class: 'F', temp: '7,500°C', magnitude: '-0.72', distance: '310 سنة ضوئية', constellation: 'القاعدة', description: 'ثاني ألمع نجم في السماء.', color: 'white', luminosity: '13,000 شمس' },
+            
+            // نجوم ثنائية
+            { id: 14, name: 'رأس التوأم', nameEn: 'Castor', type: 'binary', class: 'A', temp: '10,000°C', magnitude: '1.98', distance: '51 سنة ضوئية', constellation: 'الجوزاء', description: 'نجم سداسي (6 نجوم في نظام واحد).', color: 'white', luminosity: '50 شمس' },
+            { id: 15, name: 'رأس التوأم', nameEn: 'Pollux', type: 'orange', class: 'K', temp: '4,600°C', magnitude: '1.14', distance: '34 سنة ضوئية', constellation: 'الجوزاء', description: 'عملاق برتقالي.', color: 'orange', luminosity: '32 شمس' },
+            
+            // نجوم مشهورة أخرى
+            { id: 16, name: 'الطائر', nameEn: 'Grus', type: 'blue', class: 'B', temp: '14,000°C', magnitude: '1.74', distance: '100 سنة ضوئية', constellation: 'الكركي', description: 'ألمع نجم في كوكبة الكركي.', color: 'blue', luminosity: '500 شمس' },
+            { id: 17, name: 'العيوق', nameEn: 'Capella', type: 'yellow', class: 'G', temp: '5,700°C', magnitude: '0.08', distance: '42 سنة ضوئية', constellation: 'ممسك الأعنة', description: 'نجم رباعي.', color: 'yellow', luminosity: '150 شمس' },
+            { id: 18, name: 'السماك الرامح', nameEn: 'Arcturus', type: 'orange', class: 'K', temp: '4,300°C', magnitude: '-0.04', distance: '36.7 سنة ضوئية', constellation: 'العواء', description: 'رابع ألمع نجم.', color: 'orange', luminosity: '170 شمس' }
         ];
 
-        // متغيرات للتحكم في عرض الكوكبات
+        // متغيرات للتحكم
         let currentFilter = 'all';
-        let visibleCount = 12;
-        const increment = 12;
+        let visibleCount = 8;
+        const increment = 8;
 
-        // عرض الكوكبات
-        function displayConstellations() {
-            const grid = document.getElementById('constellationsGrid');
-            const filtered = filterData();
+        // الحصول على كلاس النجم حسب لونه
+        function getStarColorClass(color) {
+            switch(color) {
+                case 'red': return 'star-red';
+                case 'blue': return 'star-blue';
+                case 'yellow': return 'star-yellow';
+                case 'white': return 'star-white';
+                case 'orange': return 'star-orange';
+                default: return 'star-white';
+            }
+        }
+
+        // الحصول على توهج النجم حسب لونه
+        function getStarGlow(color) {
+            switch(color) {
+                case 'red': return 'glow-red';
+                case 'blue': return 'glow-blue';
+                case 'yellow': return 'glow-yellow';
+                case 'white': return 'glow-white';
+                case 'orange': return 'glow-orange';
+                default: return '';
+            }
+        }
+
+        // إنشاء بطاقة نجم
+        function createStarCard(star) {
+            const div = document.createElement('div');
+            const colorClass = getStarColorClass(star.color);
+            const glowClass = getStarGlow(star.color);
+            
+            div.className = `star-card ${colorClass} cursor-pointer`;
+            div.onclick = () => showStarDetails(star);
+            
+            div.innerHTML = `
+                <div class="flex justify-between items-start mb-3">
+                    <h3 class="text-xl md:text-2xl font-bold text-white">${star.name}</h3>
+                    <div class="w-8 h-8 rounded-full ${glowClass}" style="background: radial-gradient(circle, ${star.color === 'red' ? '#ff5050' : star.color === 'blue' ? '#5090ff' : star.color === 'yellow' ? '#ffd700' : star.color === 'white' ? '#ffffff' : '#ff9500'}, transparent);"></div>
+                </div>
+                <p class="text-gray-400 text-sm mb-2">${star.nameEn} • ${star.constellation}</p>
+                <p class="text-gray-300 text-sm mb-4 line-clamp-2">${star.description}</p>
+                <div class="grid grid-cols-2 gap-2 text-xs">
+                    <div class="bg-black/30 rounded-lg p-2">
+                        <span class="text-gray-400">اللمعان</span>
+                        <div class="text-yellow-400 font-bold">${star.magnitude}</div>
+                    </div>
+                    <div class="bg-black/30 rounded-lg p-2">
+                        <span class="text-gray-400">الحرارة</span>
+                        <div class="${star.color === 'red' ? 'text-red-400' : star.color === 'blue' ? 'text-blue-400' : 'text-yellow-400'} font-bold">${star.temp}</div>
+                    </div>
+                </div>
+                <div class="mt-3 flex items-center justify-between">
+                    <span class="text-xs text-gray-400">${star.distance}</span>
+                    <span class="text-xs px-2 py-1 rounded-full bg-${star.color}-500/20 border border-${star.color}-500/30">${star.class}</span>
+                </div>
+            `;
+            
+            return div;
+        }
+
+        // عرض النجوم
+        function displayStars() {
+            const grid = document.getElementById('starsGrid');
+            const filtered = filterStarsData();
             
             const toShow = filtered.slice(0, visibleCount);
             
             grid.innerHTML = '';
-            toShow.forEach(constellation => {
-                const card = createConstellationCard(constellation);
+            toShow.forEach(star => {
+                const card = createStarCard(star);
                 grid.appendChild(card);
             });
 
@@ -101,75 +119,57 @@
             }
         }
 
-        // إنشاء بطاقة كوكبة
-        function createConstellationCard(constellation) {
-            const div = document.createElement('div');
-            div.className = 'constellation-card';
-            div.onclick = () => showConstellationDetails(constellation);
-            
-            const regionColor = constellation.region === 'northern' ? 'text-blue-400 border-blue-400/30' : 'text-orange-400 border-orange-400/30';
-            const regionText = constellation.region === 'northern' ? 'شمالي' : 'جنوبي';
-            
-            div.innerHTML = `
-                <div class="flex justify-between items-start mb-3">
-                    <h3 class="text-xl md:text-2xl font-bold text-yellow-400">${constellation.name}</h3>
-                    <span class="text-xs border ${regionColor} rounded-full px-2 py-1">${regionText}</span>
-                </div>
-                <p class="text-gray-400 text-sm mb-2">${constellation.nameEn}</p>
-                <p class="text-gray-300 text-sm mb-4 line-clamp-2">${constellation.description}</p>
-                <div class="flex items-center gap-2 mb-3">
-                    <i class="fas fa-star text-yellow-400 text-sm"></i>
-                    <span class="text-gray-400 text-sm">${constellation.stars} نجوم رئيسية</span>
-                </div>
-                ${constellation.famousStars.length > 0 ? `
-                    <div class="flex flex-wrap gap-1">
-                        ${constellation.famousStars.slice(0, 3).map(star => 
-                            `<span class="text-xs bg-yellow-500/10 border border-yellow-500/30 rounded-full px-2 py-1">${star}</span>`
-                        ).join('')}
-                        ${constellation.famousStars.length > 3 ? '<span class="text-xs text-gray-500">...</span>' : ''}
-                    </div>
-                ` : ''}
-            `;
-            
-            return div;
-        }
-
-        // تصفية البيانات
-        function filterData() {
-            if (currentFilter === 'all') return constellationsData;
-            return constellationsData.filter(c => c.category === currentFilter || c.region === currentFilter);
+        // تصفية النجوم
+        function filterStarsData() {
+            if (currentFilter === 'all') return starsData;
+            return starsData.filter(star => star.type === currentFilter);
         }
 
         // تغيير التصفية
-        function filterConstellations(filter) {
+        function filterStars(filter) {
             currentFilter = filter;
-            visibleCount = 12;
+            visibleCount = 8;
             
-            // تحديث الأزرار
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
             event.target.classList.add('active');
             
-            displayConstellations();
+            displayStars();
         }
 
         // تحميل المزيد
         function loadMore() {
             visibleCount += increment;
-            displayConstellations();
+            displayStars();
         }
 
-        // عرض تفاصيل الكوكبة
-        function showConstellationDetails(constellation) {
-            // هنا يمكن فتح نافذة منبثقة أو الانتقال لصفحة تفاصيل
-            alert(`الكوكبة: ${constellation.name}\nالوصف: ${constellation.description}`);
+        // عرض تفاصيل النجم
+        function showStarDetails(star) {
+            const colors = {
+                red: '#ff5050',
+                blue: '#5090ff',
+                yellow: '#ffd700',
+                white: '#ffffff',
+                orange: '#ff9500'
+            };
+            
+            alert(`⭐ ${star.name} (${star.nameEn})
+            
+📋 التصنيف: ${star.class}
+🌡️ الحرارة: ${star.temp}
+📏 البعد: ${star.distance}
+💫 اللمعان: ${star.luminosity}
+🔭 القدر الظاهري: ${star.magnitude}
+🌌 الكوكبة: ${star.constellation}
+
+📝 الوصف: ${star.description}`);
         }
 
         // البحث
-        function setupConstellationSearch() {
-            const searchInput = document.getElementById('constellationSearch');
-            const resultsDiv = document.getElementById('constellationSearchResults');
+        function setupStarSearch() {
+            const searchInput = document.getElementById('starSearch');
+            const resultsDiv = document.getElementById('starSearchResults');
             
             if (!searchInput) return;
             
@@ -181,10 +181,10 @@
                     return;
                 }
                 
-                const results = constellationsData.filter(c => 
-                    c.name.includes(term) || 
-                    c.nameEn.toLowerCase().includes(term) ||
-                    c.famousStars.some(star => star.includes(term))
+                const results = starsData.filter(star => 
+                    star.name.includes(term) || 
+                    star.nameEn.toLowerCase().includes(term) ||
+                    star.constellation.includes(term)
                 );
                 
                 if (results.length > 0) {
@@ -196,9 +196,9 @@
                         div.className = 'search-result-item p-3 hover:bg-yellow-500/10 cursor-pointer';
                         div.innerHTML = `
                             <div class="font-bold text-yellow-400">${result.name}</div>
-                            <div class="text-sm text-gray-400">${result.nameEn} • ${result.stars} نجوم</div>
+                            <div class="text-sm text-gray-400">${result.nameEn} • ${result.constellation} • ${result.type}</div>
                         `;
-                        div.onclick = () => showConstellationDetails(result);
+                        div.onclick = () => showStarDetails(result);
                         resultsDiv.appendChild(div);
                     });
                 } else {
@@ -259,10 +259,9 @@
 
         // تهيئة الصفحة
         document.addEventListener('DOMContentLoaded', function() {
-            displayConstellations();
-            setupConstellationSearch();
+            displayStars();
+            setupStarSearch();
             
-            // إغلاق القائمة عند النقر على الروابط
             document.querySelectorAll('.mobile-menu a').forEach(link => {
                 link.addEventListener('click', closeMobileMenu);
             });
