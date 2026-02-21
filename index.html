@@ -2,23 +2,586 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sky</title>
-    <!--css -->
-      <link href="./output.css" rel="stylesheet">
-    <!-- style -->
-     <style>
-        
-     </style>
-         <link href="./output.css" rel="stylesheet">
-        <!-- Font Awesome -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>الرئيسية - الموسوعة الفلكية</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Tajawal', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0a0f1e 0%, #0b1a2e 50%, #0f212f 100%);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* خلفية النجوم */
+        .stars, .twinkling {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .stars {
+            background: #000 url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48Y2lyY2xlIGN4PSI2IiBjeT0iMTQiIHI9IjEiIGZpbGw9IndoaXRlIiAvPjxjaXJjbGUgY3g9IjE2MCIgY3k9IjYwIiByPSIxLjUiIGZpbGw9IndoaXRlIiAvPjxjaXJjbGUgY3g9IjQwIiBjeT0iMjAwIiByPSIxLjIiIGZpbGw9IndoaXRlIiAvPjwvc3ZnPg==') repeat;
+            background-size: 300px 300px;
+            opacity: 0.8;
+        }
+        
+        .twinkling {
+            background: transparent url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48Y2lyY2xlIGN4PSI4MCIgY3k9IjQwIiByPSIyIiBmaWxsPSIjZmZmZmZmIiBvcGFjaXR5PSIwLjgiIC8+PC9zdmc+') repeat;
+            background-size: 300px 300px;
+            animation: twinkle 4s ease-in-out infinite;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+        
+        .content {
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* الناف بار */
+        .glass-nav {
+            background: rgba(5, 10, 20, 0.95);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.15);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        
+        /* القائمة الجانبية للموبايل */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 85%;
+            max-width: 350px;
+            height: 100vh;
+            background: rgba(5, 10, 20, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 1000;
+            transition: right 0.3s ease;
+            padding: 25px 20px;
+            border-left: 1px solid rgba(255, 215, 0, 0.2);
+            overflow-y: auto;
+        }
+        
+        .mobile-menu.open {
+            right: 0;
+        }
+        
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            z-index: 999;
+            display: none;
+        }
+        
+        .mobile-menu-overlay.open {
+            display: block;
+        }
+        
+        body.menu-open {
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+        }
+        
+        /* البطاقات الزجاجية */
+        .glass-card {
+            background: rgba(10, 20, 40, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            border-color: rgba(255, 215, 0, 0.5);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 215, 0, 0.2);
+        }
+        
+        /* بطاقة الترحيب */
+        .hero-card {
+            background: linear-gradient(135deg, rgba(20, 30, 50, 0.9), rgba(10, 20, 40, 0.95));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* النجوم المتوهجة */
+        .star-glow {
+            filter: drop-shadow(0 0 8px #ffd700);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); }
+        }
+        
+        /* بطاقات النجوم */
+        .star-card {
+            background: rgba(10, 20, 40, 0.5);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 15px;
+            padding: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .star-card:hover {
+            border-color: rgba(255, 215, 0, 0.5);
+            background: rgba(20, 30, 50, 0.7);
+            transform: translateY(-3px);
+        }
+        
+        /* شريط البحث */
+        .search-container {
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            border-radius: 50px;
+            transition: all 0.3s;
+        }
+        
+        .search-container:focus-within {
+            border-color: #ffd700;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+        }
+        
+        .search-input {
+            background: transparent;
+            border: none;
+            color: white;
+            padding: 15px 20px;
+            width: 100%;
+        }
+        
+        .search-input:focus {
+            outline: none;
+        }
+        
+        /* نتائج البحث */
+        .search-results {
+            background: rgba(5, 10, 20, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .search-result-item {
+            padding: 12px 20px;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .search-result-item:hover {
+            background: rgba(255, 215, 0, 0.1);
+        }
+        
+        /* عدادات */
+        .counter {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #ffd700;
+            text-shadow: 0 0 20px rgba(255,215,0,0.5);
+            line-height: 1;
+        }
+        
+        @media (min-width: 768px) {
+            .counter {
+                font-size: 3rem;
+            }
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 15px 10px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 15px;
+            border: 1px solid rgba(255,215,0,0.1);
+        }
+        
+        @media (min-width: 768px) {
+            .stat-item {
+                padding: 20px;
+            }
+        }
+        
+        /* دوران بطيء */
+        .animate-spin-slow {
+            animation: spin 20s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body>
-    <!-- nave bar -->
-    <!-- مكان الناف بار -->
-<div id="navbar-container"></div>
-</body>
+    <!-- خلفية النجوم -->
+    <div class="stars"></div>
+    <div class="twinkling"></div>
+
+    <!-- القائمة الجانبية للموبايل -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-2xl font-bold text-yellow-400">القائمة</h2>
+            <button onclick="closeMobileMenu()" class="text-white text-2xl w-12 h-12 flex items-center justify-center hover:bg-yellow-500/20 rounded-full transition">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="text-center mb-8">
+            <div class="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center mb-3">
+                <i class="fas fa-globe text-5xl text-black"></i>
+            </div>
+            <h3 class="text-white font-bold">الموسوعة الفلكية</h3>
+            <p class="text-gray-400 text-sm">اكتشف أسرار الكون</p>
+        </div>
+        
+        <nav class="flex flex-col gap-2">
+            <a href="index.html" class="text-white text-lg py-3 px-4 rounded-xl hover:bg-yellow-500/20 transition flex items-center gap-3 bg-yellow-500/20">
+                <i class="fas fa-home text-yellow-400 w-6"></i>
+                <span>الرئيسية</span>
+            </a>
+            
+            <div class="border-b border-yellow-500/10 pb-2">
+                <div class="text-yellow-400 text-sm px-4 py-2">الكون</div>
+                <a href="Patterns/index.html" class="text-white text-lg py-3 pr-12 px-4 rounded-xl hover:bg-yellow-500/20 transition flex items-center gap-3">
+                    <i class="fas fa-star text-yellow-400 w-6"></i>
+                    <span>الكوكبات</span>
+                    <span class="mr-auto text-sm text-gray-400">88</span>
+                </a>
+                <a href="stars.html" class="text-white text-lg py-3 pr-12 px-4 rounded-xl hover:bg-yellow-500/20 transition flex items-center gap-3">
+                    <i class="fas fa-sun text-yellow-400 w-6"></i>
+                    <span>النجوم</span>
+                    <span class="mr-auto text-sm text-gray-400">200+</span>
+                </a>
+                <a href="nebulae.html" class="text-white text-lg py-3 pr-12 px-4 rounded-xl hover:bg-yellow-500/20 transition flex items-center gap-3">
+                    <i class="fas fa-cloud text-yellow-400 w-6"></i>
+                    <span>السدم</span>
+                    <span class="mr-auto text-sm text-gray-400">20+</span>
+                </a>
+                <a href="galaxies.html" class="text-white text-lg py-3 pr-12 px-4 rounded-xl hover:bg-yellow-500/20 transition flex items-center gap-3">
+                    <i class="fas fa-galaxy text-yellow-400 w-6"></i>
+                    <span>المجرات</span>
+                    <span class="mr-auto text-sm text-gray-400">100+</span>
+                </a>
+            </div>
+            
+            <div class="border-b border-yellow-500/10 pb-2">
+                <div class="text-yellow-400 text-sm px-4 py-2">الظواهر الكونية</div>
+                <a href="blackholes.html" class="text-white text-lg py-3 pr-12 px-4 rounded-xl hover:bg-yellow-500/20 transition flex items-center gap-3">
+                    <i class="fas fa-circle text-yellow-400 w-6"></i>
+                    <span>الثقوب السوداء</span>
+                </a>
+                <a href="solar-system.html" class="text-white text-lg py-3 pr-12 px-4 rounded-xl hover:bg-yellow-500/20 transition flex items-center gap-3">
+                    <i class="fas fa-planet-ringed text-yellow-400 w-6"></i>
+                    <span>المجموعة الشمسية</span>
+                </a>
+            </div>
+            
+            <a href="about.html" class="text-white text-lg py-3 px-4 rounded-xl hover:bg-yellow-500/20 transition flex items-center gap-3">
+                <i class="fas fa-info-circle text-yellow-400 w-6"></i>
+                <span>عن الموسوعة</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- الناف بار الرئيسي -->
+    <nav class="glass-nav sticky top-0 z-30">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-16 md:h-20">
+                <!-- الشعار -->
+                <a href="index.html" class="flex items-center gap-3 group">
+                    <div class="relative">
+                        <i class="fas fa-meteor text-yellow-400 text-2xl star-glow"></i>
+                        <div class="absolute -inset-1 bg-yellow-400/20 rounded-full blur-md group-hover:bg-yellow-400/30 transition"></div>
+                    </div>
+                    <span class="text-xl font-bold text-white">
+                        <span class="text-yellow-400">الفلك</span> بيديا
+                    </span>
+                </a>
+                
+                <!-- القائمة الرئيسية للديسكتوب -->
+                <div class="hidden md:flex items-center gap-1">
+                    <a href="#" class="text-yellow-400 bg-yellow-500/20 px-3 py-2 rounded-lg transition flex items-center gap-2">
+                        <i class="fas fa-home"></i>
+                        <span>الرئيسية</span>
+                    </a>
+                    <a href="Patterns/index.html" class="text-gray-300 hover:text-yellow-400 px-3 py-2 rounded-lg transition flex items-center gap-2">
+                        <i class="fas fa-star"></i>
+                        <span>الكوكبات</span>
+                    </a>
+                    <a href="stars.html" class="text-gray-300 hover:text-yellow-400 px-3 py-2 rounded-lg transition flex items-center gap-2">
+                        <i class="fas fa-sun"></i>
+                        <span>النجوم</span>
+                    </a>
+                    <a href="nebulae.html" class="text-gray-300 hover:text-yellow-400 px-3 py-2 rounded-lg transition flex items-center gap-2">
+                        <i class="fas fa-cloud"></i>
+                        <span>السدم</span>
+                    </a>
+                    <a href="galaxies.html" class="text-gray-300 hover:text-yellow-400 px-3 py-2 rounded-lg transition flex items-center gap-2">
+                        <i class="fas fa-galaxy"></i>
+                        <span>المجرات</span>
+                    </a>
+                </div>
+                
+                <!-- أيقونات يمنى -->
+                <div class="flex items-center gap-3">
+                    <!-- زر البحث -->
+                    <button onclick="toggleSearch()" class="hidden md:block text-white hover:text-yellow-400 text-xl w-10 h-10 flex items-center justify-center rounded-full hover:bg-yellow-500/10 transition">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    
+                    <!-- زر القائمة للموبايل -->
+                    <button onclick="openMobileMenu()" class="md:hidden text-white text-2xl w-12 h-12 flex items-center justify-center hover:bg-yellow-500/20 rounded-full transition">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- شريط البحث المنبثق -->
+        <div id="searchBar" class="hidden border-t border-yellow-500/20 py-4">
+            <div class="container mx-auto px-4">
+                <div class="relative">
+                    <i class="fas fa-search absolute right-4 top-1/2 transform -translate-y-1/2 text-yellow-500"></i>
+                    <input type="text" id="globalSearch" placeholder="ابحث عن كوكبة، نجم، سديم، مجرة..." 
+                           class="w-full bg-black/30 border-2 border-yellow-500/20 rounded-full py-3 pr-12 pl-12 text-white focus:border-yellow-500 focus:outline-none transition">
+                    <button onclick="toggleSearch()" class="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white px-3">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div id="globalSearchResults" class="search-results mt-2 hidden"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="content container mx-auto px-4 py-4 md:py-8">
+        <!-- قسم الترحيب البطولي -->
+        <div class="hero-card p-6 md:p-12 mb-8 md:mb-16 relative overflow-hidden">
+            <div class="relative z-10">
+                <div class="flex flex-col md:flex-row items-center gap-6 md:gap-8">
+                    <div class="flex-1 text-center md:text-right">
+                        <div class="flex items-center justify-center md:justify-start gap-2 mb-3 md:mb-4">
+                            <i class="fas fa-star text-yellow-400 text-xl md:text-2xl star-glow"></i>
+                            <i class="fas fa-star text-yellow-400 text-xl md:text-2xl star-glow" style="animation-delay: 0.5s;"></i>
+                            <i class="fas fa-star text-yellow-400 text-xl md:text-2xl star-glow" style="animation-delay: 1s;"></i>
+                        </div>
+                        <h1 class="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black mb-2 md:mb-4">
+                            <span class="text-yellow-400">اكتشف</span>
+                            <span class="text-white"> الكون</span>
+                        </h1>
+                        <p class="text-lg md:text-2xl text-gray-300 mb-3 md:mb-6">رحلتك لاستكشاف أسرار الفضاء تبدأ هنا</p>
+                        <p class="text-sm md:text-lg text-gray-400 max-w-2xl mx-auto md:mx-0 mb-4 md:mb-6">
+                            موسوعة فلكية شاملة تضم آلاف المعلومات عن الكواكب، النجوم، المجرات، والظواهر الكونية.
+                        </p>
+                        
+                        <!-- البحث السريع في الصفحة الرئيسية -->
+                        <div class="max-w-xl mx-auto md:mx-0 mt-6 md:mt-8">
+                            <div class="search-container flex items-center px-4">
+                                <i class="fas fa-search text-yellow-500 ml-3"></i>
+                                <input type="text" id="quickSearch" placeholder="ابحث عن نجم، كوكبة، مجرة..." 
+                                       class="search-input py-3 md:py-4">
+                            </div>
+                            <div id="quickSearchResults" class="search-results mt-2 hidden"></div>
+                        </div>
+                        
+                        <!-- أزرار سريعة -->
+                        <div class="flex flex-col sm:flex-row gap-3 md:gap-4 mt-6 md:mt-8 justify-center md:justify-start">
+                            <a href="constellations.html" class="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-3 px-6 md:py-3 md:px-8 rounded-full transition transform hover:scale-105 text-sm md:text-base">
+                                <i class="fas fa-star ml-2"></i>
+                                استكشف الكوكبات
+                            </a>
+                            <a href="#stats" class="border-2 border-yellow-500 text-yellow-400 hover:bg-yellow-500 hover:text-black font-bold py-3 px-6 md:py-3 md:px-8 rounded-full transition text-sm md:text-base">
+                                <i class="fas fa-info-circle ml-2"></i>
+                                حقائق سريعة
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- رسم توضيحي للكون -->
+                    <div class="hidden sm:flex flex-1 justify-center">
+                        <div class="relative">
+                            <div class="w-48 h-48 md:w-64 md:h-64 lg:w-72 lg:h-72 rounded-full border-2 border-yellow-500/20 border-dashed animate-spin-slow"></div>
+                            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                <i class="fas fa-globe text-4xl md:text-5xl lg:text-6xl text-yellow-400 opacity-30"></i>
+                            </div>
+                            <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                <i class="fas fa-star text-yellow-400 text-xl star-glow"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- إحصائيات سريعة -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-8 md:mb-16" id="stats">
+            <div class="stat-item glass-card">
+                <i class="fas fa-star text-yellow-400 text-2xl md:text-3xl mb-1 md:mb-2"></i>
+                <div class="counter">88</div>
+                <div class="text-xs md:text-base text-gray-400">كوكبة</div>
+            </div>
+            <div class="stat-item glass-card">
+                <i class="fas fa-sun text-yellow-400 text-2xl md:text-3xl mb-1 md:mb-2"></i>
+                <div class="counter">200+</div>
+                <div class="text-xs md:text-base text-gray-400">نجم لامع</div>
+            </div>
+            <div class="stat-item glass-card">
+                <i class="fas fa-galaxy text-yellow-400 text-2xl md:text-3xl mb-1 md:mb-2"></i>
+                <div class="counter">100</div>
+                <div class="text-xs md:text-base text-gray-400">مليار مجرة</div>
+            </div>
+            <div class="stat-item glass-card">
+                <i class="fas fa-cloud text-yellow-400 text-2xl md:text-3xl mb-1 md:mb-2"></i>
+                <div class="counter">20+</div>
+                <div class="text-xs md:text-base text-gray-400">سديم</div>
+            </div>
+        </div>
+        
+        <!-- أشهر النجوم -->
+        <h2 class="text-2xl md:text-3xl font-bold mb-4 md:mb-6 text-center">
+            <span class="text-yellow-400">أشهر</span>
+            <span class="text-white"> النجوم</span>
+        </h2>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8 md:mb-12">
+            <!-- منكب الجوزاء -->
+            <div class="star-card" onclick="window.location.href='stars.html#betelgeuse'">
+                <div class="flex items-center gap-3 mb-2">
+                    <i class="fas fa-star text-yellow-400 text-xl"></i>
+                    <h3 class="text-lg md:text-xl font-bold text-white">منكب الجوزاء</h3>
+                </div>
+                <p class="text-gray-400 text-sm mb-2">كوكبة الجبار</p>
+                <p class="text-yellow-400 text-xs md:text-sm">نجم عملاق أحمر</p>
+            </div>
+            
+            <!-- الشعرى اليمانية -->
+            <div class="star-card" onclick="window.location.href='stars.html#sirius'">
+                <div class="flex items-center gap-3 mb-2">
+                    <i class="fas fa-star text-yellow-400 text-xl"></i>
+                    <h3 class="text-lg md:text-xl font-bold text-white">الشعرى اليمانية</h3>
+                </div>
+                <p class="text-gray-400 text-sm mb-2">كوكبة الكلب الأكبر</p>
+                <p class="text-yellow-400 text-xs md:text-sm">ألمع نجم في السماء</p>
+            </div>
+            
+            <!-- رجل الجبار -->
+            <div class="star-card" onclick="window.location.href='stars.html#rigel'">
+                <div class="flex items-center gap-3 mb-2">
+                    <i class="fas fa-star text-yellow-400 text-xl"></i>
+                    <h3 class="text-lg md:text-xl font-bold text-white">رجل الجبار</h3>
+                </div>
+                <p class="text-gray-400 text-sm mb-2">كوكبة الجبار</p>
+                <p class="text-yellow-400 text-xs md:text-sm">نجم أزرق عملاق</p>
+            </div>
+            
+            <!-- النسر الطائر -->
+            <div class="star-card" onclick="window.location.href='stars.html#altair'">
+                <div class="flex items-center gap-3 mb-2">
+                    <i class="fas fa-star text-yellow-400 text-xl"></i>
+                    <h3 class="text-lg md:text-xl font-bold text-white">النسر الطائر</h3>
+                </div>
+                <p class="text-gray-400 text-sm mb-2">كوكبة النسر</p>
+                <p class="text-yellow-400 text-xs md:text-sm">نجم أبيض لامع</p>
+            </div>
+        </div>
+        
+        <!-- أشهر الكوكبات -->
+        <h2 class="text-2xl md:text-3xl font-bold mb-4 md:mb-6 text-center">
+            <span class="text-yellow-400">أشهر</span>
+            <span class="text-white"> الكوكبات</span>
+        </h2>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8 md:mb-12">
+            <!-- الجبار -->
+            <div class="glass-card rounded-2xl p-4 md:p-6 cursor-pointer" onclick="window.location.href='constellations.html#orion'">
+                <div class="flex items-center gap-3 mb-2">
+                    <i class="fas fa-star text-yellow-400"></i>
+                    <h3 class="text-lg md:text-xl font-bold text-white">الجبار</h3>
+                </div>
+                <p class="text-gray-400 text-sm">أشهر كوكبة في السماء، تتميز بثلاثة نجوم تشكل حزام الجبار</p>
+            </div>
+            
+            <!-- الدب الأكبر -->
+            <div class="glass-card rounded-2xl p-4 md:p-6 cursor-pointer" onclick="window.location.href='constellations.html#ursa-major'">
+                <div class="flex items-center gap-3 mb-2">
+                    <i class="fas fa-star text-yellow-400"></i>
+                    <h3 class="text-lg md:text-xl font-bold text-white">الدب الأكبر</h3>
+                </div>
+                <p class="text-gray-400 text-sm">مجموعة نجمية في الشمال تعرف باسم بنات نعش الكبرى</p>
+            </div>
+            
+            <!-- ذات الكرسي -->
+            <div class="glass-card rounded-2xl p-4 md:p-6 cursor-pointer" onclick="window.location.href='constellations.html#cassiopeia'">
+                <div class="flex items-center gap-3 mb-2">
+                    <i class="fas fa-star text-yellow-400"></i>
+                    <h3 class="text-lg md:text-xl font-bold text-white">ذات الكرسي</h3>
+                </div>
+                <p class="text-gray-400 text-sm">كوكبة على شكل حرف W في السماء، تحتوي على نجوم ساطعة</p>
+            </div>
+        </div>
+        
+        <!-- دعوة للاستكشاف -->
+        <div class="text-center mt-8 md:mt-12 mb-8">
+            <a href="Patterns/index.html" class="inline-block bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-bold py-3 px-8 md:py-4 md:px-12 rounded-full text-base md:text-xl hover:scale-105 transition shadow-2xl">
+                <i class="fas fa-rocket ml-2"></i>
+                انطلق في الرحلة
+            </a>
+        </div>
+    </div>
+
+    <!-- فوتر بسيط -->
+    <footer class="border-t border-yellow-500/20 py-4 md:py-6">
+        <div class="container mx-auto px-4 text-center text-gray-400">
+            <p class="text-sm md:text-base">الموسوعة الفلكية - دليلك الشامل لاستكشاف الكون</p>
+            <p class="text-xs md:text-sm mt-2">جميع الحقوق محفوظة © 20226</p>
+            <p class="text-xs md:text-sm mt-2">تطوير :خالد الزعبي</p>
+            
+        </div>
+    </footer>
+    </body>
+    <script src="index.js" defer></script>
 </html>
