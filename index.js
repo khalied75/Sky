@@ -43,15 +43,15 @@
         // بيانات البحث
         const searchData = [
             // الكوكبات
-            { type: 'كوكبة', name: 'الجبار', url: 'constellations.html' },
-            { type: 'كوكبة', name: 'الدب الأكبر', url: 'constellations.html' },
-            { type: 'كوكبة', name: 'ذات الكرسي', url: 'constellations.html' },
-            { type: 'كوكبة', name: 'العقرب', url: 'constellations.html' },
+            { type: 'كوكبة', name: 'الجبار', url: 'Patterns/index.html' },
+            { type: 'كوكبة', name: 'الدب الأكبر', url: 'Patterns/index.html' },
+            { type: 'كوكبة', name: 'ذات الكرسي', url: 'Patterns/index.html' },
+            { type: 'كوكبة', name: 'العقرب', url: 'Patterns/index.html' },
             // النجوم
-            { type: 'نجم', name: 'منكب الجوزاء', url: 'stars.html' },
-            { type: 'نجم', name: 'الشعرى اليمانية', url: 'stars.html' },
-            { type: 'نجم', name: 'رجل الجبار', url: 'stars.html' },
-            { type: 'نجم', name: 'النسر الطائر', url: 'stars.html' },
+            { type: 'نجم', name: 'منكب الجوزاء', url: 'stars/index.html' },
+            { type: 'نجم', name: 'الشعرى اليمانية', url: 'stars/index.html' },
+            { type: 'نجم', name: 'رجل الجبار', url: 'stars/index.html' },
+            { type: 'نجم', name: 'النسر الطائر', url: 'stars/index.htmll' },
             // المجرات
             { type: 'مجرة', name: 'درب التبانة', url: 'galaxies.html' },
             { type: 'مجرة', name: 'أندروميدا', url: 'galaxies.html' },
