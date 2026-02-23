@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -26,7 +25,7 @@
         }
         
         /* خلفية النجوم */
-        .stars, .twinkling, .nebula-fog {
+        .stars, .twinkling {
             position: fixed;
             top: 0;
             left: 0;
@@ -50,21 +49,9 @@
             animation: twinkle 4s ease-in-out infinite;
         }
         
-        .nebula-fog {
-            background: radial-gradient(circle at 30% 40%, rgba(100, 50, 150, 0.1) 0%, transparent 40%),
-                        radial-gradient(circle at 70% 60%, rgba(50, 100, 200, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 20%, rgba(200, 100, 50, 0.1) 0%, transparent 30%);
-            animation: fogMove 30s ease-in-out infinite alternate;
-        }
-        
         @keyframes twinkle {
             0%, 100% { opacity: 0.3; }
             50% { opacity: 1; }
-        }
-        
-        @keyframes fogMove {
-            0% { transform: scale(1) translate(0, 0); opacity: 0.3; }
-            100% { transform: scale(1.2) translate(-2%, -2%); opacity: 0.5; }
         }
         
         .content {
@@ -72,7 +59,7 @@
             z-index: 10;
         }
         
-        /* الناف بار */
+        /* ===== الناف بار المطابق للصورة ===== */
         .glass-nav {
             background: rgba(5, 10, 20, 0.95);
             backdrop-filter: blur(15px);
@@ -129,158 +116,138 @@
             width: 100%;
         }
         
-        /* بطاقات السدم - تصميم ضبابي ساحر */
+        /* روابط الناف بار */
+        .nav-link {
+            color: #9ca3af;
+            transition: color 0.2s;
+            font-size: 1rem;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .nav-link:hover {
+            color: #ffd700;
+        }
+        
+        .nav-link.active {
+            color: #ffd700;
+            background: rgba(255, 215, 0, 0.1);
+        }
+        
+        /* النجوم المتوهجة */
+        .star-glow {
+            filter: drop-shadow(0 0 8px #ffd700);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); }
+        }
+        
+        /* ===== تصميم السدم ===== */
+        
+        /* بطاقات السدم */
         .nebula-card {
-            background: rgba(15, 10, 30, 0.6);
+            background: rgba(15, 10, 30, 0.7);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(200, 150, 255, 0.2);
+            border: 1px solid rgba(255, 215, 0, 0.15);
             border-radius: 24px;
             padding: 20px;
-            transition: all 0.4s ease;
+            transition: all 0.3s ease;
             cursor: pointer;
             position: relative;
             overflow: hidden;
         }
         
-        .nebula-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(150, 100, 255, 0.2) 0%, transparent 60%);
-            animation: nebulaPulse 8s ease-in-out infinite;
-            opacity: 0;
-            transition: opacity 0.5s;
-        }
-        
-        .nebula-card:hover::before {
-            opacity: 1;
-        }
-        
         .nebula-card:hover {
-            transform: translateY(-5px) scale(1.02);
-            border-color: rgba(200, 150, 255, 0.5);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 40px rgba(150, 100, 255, 0.3);
+            transform: translateY(-5px);
+            border-color: rgba(255, 215, 0, 0.4);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
         }
         
-        @keyframes nebulaPulse {
-            0%, 100% { transform: scale(1) rotate(0deg); }
-            50% { transform: scale(1.2) rotate(5deg); }
-        }
-        
-        /* أنواع السدم المختلفة */
+        /* أنواع السدم */
         .nebula-emission {
-            background: linear-gradient(135deg, rgba(200, 50, 100, 0.2), rgba(15, 10, 30, 0.8));
-            border-color: rgba(255, 100, 150, 0.3);
+            background: linear-gradient(135deg, rgba(200, 80, 120, 0.2), rgba(15, 10, 30, 0.9));
+            border-right: 4px solid #ff99cc;
         }
         
         .nebula-reflection {
-            background: linear-gradient(135deg, rgba(50, 100, 200, 0.2), rgba(15, 10, 30, 0.8));
-            border-color: rgba(100, 150, 255, 0.3);
+            background: linear-gradient(135deg, rgba(80, 120, 200, 0.2), rgba(15, 10, 30, 0.9));
+            border-right: 4px solid #99ccff;
         }
         
         .nebula-planetary {
-            background: linear-gradient(135deg, rgba(50, 200, 150, 0.2), rgba(15, 10, 30, 0.8));
-            border-color: rgba(50, 200, 150, 0.3);
+            background: linear-gradient(135deg, rgba(80, 180, 120, 0.2), rgba(15, 10, 30, 0.9));
+            border-right: 4px solid #99ff99;
         }
         
         .nebula-dark {
-            background: linear-gradient(135deg, rgba(100, 50, 30, 0.2), rgba(15, 10, 30, 0.8));
-            border-color: rgba(150, 100, 50, 0.3);
+            background: linear-gradient(135deg, rgba(120, 80, 60, 0.2), rgba(15, 10, 30, 0.9));
+            border-right: 4px solid #cc99ff;
         }
         
         .nebula-supernova {
-            background: linear-gradient(135deg, rgba(255, 150, 50, 0.2), rgba(15, 10, 30, 0.8));
-            border-color: rgba(255, 150, 50, 0.3);
-        }
-        
-        /* ألوان متوهجة للسدم */
-        .glow-pink {
-            filter: drop-shadow(0 0 20px rgba(255, 100, 150, 0.6));
-        }
-        
-        .glow-blue {
-            filter: drop-shadow(0 0 20px rgba(100, 150, 255, 0.6));
-        }
-        
-        .glow-green {
-            filter: drop-shadow(0 0 20px rgba(50, 200, 150, 0.6));
-        }
-        
-        .glow-orange {
-            filter: drop-shadow(0 0 20px rgba(255, 150, 50, 0.6));
-        }
-        
-        .glow-purple {
-            filter: drop-shadow(0 0 20px rgba(150, 100, 255, 0.6));
+            background: linear-gradient(135deg, rgba(220, 140, 60, 0.2), rgba(15, 10, 30, 0.9));
+            border-right: 4px solid #ffcc99;
         }
         
         /* أزرار التصفية */
         .filter-btn {
-            background: rgba(150, 100, 255, 0.1);
-            border: 1px solid rgba(150, 100, 255, 0.3);
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.2);
             color: white;
-            padding: 10px 20px;
+            padding: 8px 16px;
             border-radius: 30px;
-            transition: all 0.3s;
+            transition: all 0.2s;
             cursor: pointer;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             white-space: nowrap;
         }
         
         .filter-btn:hover,
         .filter-btn.active {
-            background: rgba(150, 100, 255, 0.3);
-            border-color: #a78bfa;
-            box-shadow: 0 0 20px rgba(150, 100, 255, 0.3);
-            color: #ffffff;
+            background: rgba(255, 215, 0, 0.2);
+            border-color: #ffd700;
         }
         
         /* شريط التمرير الأفقي */
         .filters-scroll {
             overflow-x: auto;
-            scrollbar-width: thin;
-            scrollbar-color: #a78bfa #1a1a2e;
             -webkit-overflow-scrolling: touch;
-            padding-bottom: 10px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            padding-bottom: 8px;
         }
         
         .filters-scroll::-webkit-scrollbar {
-            height: 5px;
-        }
-        
-        .filters-scroll::-webkit-scrollbar-track {
-            background: #1a1a2e;
-            border-radius: 10px;
-        }
-        
-        .filters-scroll::-webkit-scrollbar-thumb {
-            background: #a78bfa;
-            border-radius: 10px;
+            display: none;
         }
         
         /* شريط البحث */
         .search-container {
             background: rgba(0, 0, 0, 0.3);
-            border: 2px solid rgba(150, 100, 255, 0.2);
+            border: 1px solid rgba(255, 215, 0, 0.2);
             border-radius: 50px;
-            transition: all 0.3s;
+            transition: all 0.2s;
         }
         
         .search-container:focus-within {
-            border-color: #a78bfa;
-            box-shadow: 0 0 30px rgba(150, 100, 255, 0.3);
+            border-color: #ffd700;
+            background: rgba(20, 15, 30, 0.8);
         }
         
         .search-input {
             background: transparent;
             border: none;
             color: white;
-            padding: 15px 20px;
+            padding: 12px 16px;
             width: 100%;
+            font-size: 0.95rem;
         }
         
         .search-input:focus {
@@ -289,53 +256,41 @@
         
         /* نتائج البحث */
         .search-results {
-            background: rgba(15, 10, 30, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(150, 100, 255, 0.3);
-            border-radius: 20px;
-            max-height: 400px;
+            background: rgba(15, 10, 25, 0.98);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 16px;
+            max-height: 300px;
             overflow-y: auto;
             position: absolute;
             width: 100%;
             z-index: 100;
+            margin-top: 5px;
         }
         
-        /* سحب متحركة في الخلفية */
-        .cloud {
-            position: absolute;
-            background: rgba(150, 100, 255, 0.1);
-            border-radius: 50%;
-            filter: blur(50px);
-            animation: cloudMove 20s ease-in-out infinite;
-            pointer-events: none;
+        .search-result-item {
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+            cursor: pointer;
         }
         
-        @keyframes cloudMove {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(5%, 5%) scale(1.2); }
+        .search-result-item:hover {
+            background: rgba(255, 215, 0, 0.1);
         }
         
-        /* عداد السدم */
-        .nebula-counter {
-            font-size: 5rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, #a78bfa, #ec4899);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            line-height: 1;
+        /* البطاقات الزجاجية */
+        .glass-card {
+            background: rgba(15, 10, 25, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            border-radius: 20px;
         }
     </style>
 </head>
 <body>
-    <!-- خلفية النجوم والسدم -->
+    <!-- خلفية النجوم -->
     <div class="stars"></div>
     <div class="twinkling"></div>
-    <div class="nebula-fog"></div>
-    
-    <!-- سحب متحركة -->
-    <div class="cloud" style="top: 10%; left: 20%; width: 300px; height: 150px; background: rgba(200, 100, 255, 0.1);"></div>
-    <div class="cloud" style="bottom: 20%; right: 10%; width: 400px; height: 200px; background: rgba(100, 150, 255, 0.1); animation-delay: -5s;"></div>
-    <div class="cloud" style="top: 40%; left: 60%; width: 250px; height: 250px; background: rgba(255, 100, 150, 0.1); animation-delay: -10s;"></div>
 
     <!-- القائمة الجانبية للموبايل -->
     <div class="mobile-menu" id="mobileMenu">
@@ -347,7 +302,7 @@
         </div>
         
         <div class="text-center mb-8">
-            <div class="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-purple-400 to-pink-600 flex items-center justify-center mb-3">
+            <div class="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center mb-3">
                 <i class="fas fa-globe text-5xl text-black"></i>
             </div>
             <h3 class="text-white font-bold">الموسوعة الفلكية</h3>
@@ -355,7 +310,7 @@
         </div>
         
         <nav class="flex flex-col gap-2">
-            <a href="./index.html" class="text-white text-lg py-3 px-4 rounded-xl hover:bg-yellow-500/20 transition flex items-center gap-3">
+            <a href="../index.html" class="text-white text-lg py-3 px-4 rounded-xl hover:bg-yellow-500/20 transition flex items-center gap-3">
                 <i class="fas fa-home text-yellow-400 w-6"></i>
                 <span>الرئيسية</span>
             </a>
@@ -372,12 +327,12 @@
                     <span>النجوم</span>
                     <span class="mr-auto text-sm text-gray-400">200+</span>
                 </a>
-                <a href="#" class="text-white text-lg py-3 pr-12 px-4 rounded-xl hover:bg-yellow-500/20 transition flex items-center gap-3 bg-yellow-500/20">
+                <a href="../Nebula/index.html" class="text-white text-lg py-3 pr-12 px-4 rounded-xl hover:bg-yellow-500/20 transition flex items-center gap-3 bg-yellow-500/20">
                     <i class="fas fa-cloud text-yellow-400 w-6"></i>
                     <span>السدم</span>
                     <span class="mr-auto text-sm text-gray-400">20+</span>
                 </a>
-                <a href="galaxies.html" class="text-white text-lg py-3 pr-12 px-4 rounded-xl hover:bg-yellow-500/20 transition flex items-center gap-3">
+                <a href="../galaxies/index.html" class="text-white text-lg py-3 pr-12 px-4 rounded-xl hover:bg-yellow-500/20 transition flex items-center gap-3">
                     <i class="fas fa-galaxy text-yellow-400 w-6"></i>
                     <span>المجرات</span>
                     <span class="mr-auto text-sm text-gray-400">100+</span>
@@ -395,43 +350,43 @@
                     <span>المجموعة الشمسية</span>
                 </a>
             </div>
+            
+            <a href="about.html" class="text-white text-lg py-3 px-4 rounded-xl hover:bg-yellow-500/20 transition flex items-center gap-3">
+                <i class="fas fa-info-circle text-yellow-400 w-6"></i>
+                <span>عن الموسوعة</span>
+            </a>
         </nav>
     </div>
 
-    <!-- الناف بار الرئيسي -->
     <nav class="glass-nav sticky top-0 z-30">
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center h-16 md:h-20">
-                <!-- الشعار -->
-                <a href="index.html" class="flex items-center gap-3 group">
-                    <div class="relative">
-                        <i class="fas fa-meteor text-yellow-400 text-2xl star-glow"></i>
-                        <div class="absolute -inset-1 bg-yellow-400/20 rounded-full blur-md group-hover:bg-yellow-400/30 transition"></div>
-                    </div>
-                    <span class="text-xl font-bold text-white">
+                <!-- الشعار - الفلك بيديا -->
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-meteor text-yellow-400 text-2xl star-glow"></i>
+                    <a href="index.html" class="text-xl font-bold text-white">
                         <span class="text-yellow-400">الفلك</span> بيديا
-                    </span>
-                </a>
+                    </a>
+                </div>
                 
-                <!-- القائمة الرئيسية للديسكتوب -->
                 <div class="hidden md:flex items-center gap-1">
-                    <a href="../index.html" class="text-gray-300 hover:text-yellow-400 px-3 py-2 rounded-lg transition flex items-center gap-2">
+                    <a href="../index.html" class="nav-link flex items-center gap-2">
                         <i class="fas fa-home"></i>
                         <span>الرئيسية</span>
                     </a>
-                    <a href="../Patterns/index.html" class="text-gray-300 hover:text-yellow-400 px-3 py-2 rounded-lg transition flex items-center gap-2">
+                    <a href="../Patterns/index.html" class="nav-link flex items-center gap-2">
                         <i class="fas fa-star"></i>
                         <span>الكوكبات</span>
                     </a>
-                    <a href="../stars/index.html" class="text-gray-300 hover:text-yellow-400 px-3 py-2 rounded-lg transition flex items-center gap-2">
+                    <a href="../stars/index.html" class="nav-link flex items-center gap-2">
                         <i class="fas fa-sun"></i>
                         <span>النجوم</span>
                     </a>
-                    <a href="#" class="text-yellow-400 bg-yellow-500/20 px-3 py-2 rounded-lg transition flex items-center gap-2">
+                    <a href="../Nebula/index.html" class="nav-link active flex items-center gap-2">
                         <i class="fas fa-cloud"></i>
                         <span>السدم</span>
                     </a>
-                    <a href="galaxies.html" class="text-gray-300 hover:text-yellow-400 px-3 py-2 rounded-lg transition flex items-center gap-2">
+                    <a href="../galaxies/index.html" class="nav-link flex items-center gap-2">
                         <i class="fas fa-galaxy"></i>
                         <span>المجرات</span>
                     </a>
@@ -439,13 +394,13 @@
                 
                 <!-- أيقونات يمنى -->
                 <div class="flex items-center gap-3">
-                    <!-- زر البحث -->
-                    <button onclick="toggleSearch()" class="hidden md:block text-white hover:text-yellow-400 text-xl w-10 h-10 flex items-center justify-center rounded-full hover:bg-yellow-500/10 transition">
+                    <!-- زر البحث للديسكتوب -->
+                    <button onclick="toggleSearch()" class="hidden md:block text-white hover:text-yellow-400 text-xl">
                         <i class="fas fa-search"></i>
                     </button>
                     
                     <!-- زر القائمة للموبايل -->
-                    <button onclick="openMobileMenu()" class="md:hidden text-white text-2xl w-12 h-12 flex items-center justify-center hover:bg-yellow-500/20 rounded-full transition">
+                    <button onclick="openMobileMenu()" class="md:hidden text-white text-2xl">
                         <i class="fas fa-bars"></i>
                     </button>
                 </div>
@@ -455,11 +410,12 @@
         <!-- شريط البحث المنبثق -->
         <div id="searchBar" class="hidden border-t border-yellow-500/20 py-4">
             <div class="container mx-auto px-4">
-                <div class="relative">
-                    <i class="fas fa-search absolute right-4 top-1/2 transform -translate-y-1/2 text-yellow-500"></i>
-                    <input type="text" id="globalSearch" placeholder="ابحث عن سديم..." 
-                           class="w-full bg-black/30 border-2 border-yellow-500/20 rounded-full py-3 pr-12 pl-12 text-white focus:border-yellow-500 focus:outline-none transition">
-                    <button onclick="toggleSearch()" class="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white px-3">
+                <div class="flex gap-3">
+                    <div class="flex-1 search-container flex items-center px-4">
+                        <i class="fas fa-search text-yellow-500 ml-3"></i>
+                        <input type="text" id="globalSearch" placeholder="ابحث عن سديم..." class="search-input">
+                    </div>
+                    <button onclick="toggleSearch()" class="px-4 text-gray-400 hover:text-white">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
@@ -471,142 +427,122 @@
     <!-- المحتوى الرئيسي -->
     <div class="content container mx-auto px-4 py-4 md:py-8">
         <!-- رأس الصفحة -->
-        <div class="text-center mb-8 md:mb-12">
-            <div class="inline-block relative">
-                <h1 class="text-4xl md:text-6xl lg:text-7xl font-black mb-4">
-                    <span class="text-transparent bg-clip-text bg-gradient-to-l from-purple-400 to-pink-600">
-                        السدم
-                    </span>
-                    <span class="text-white"> الكونية</span>
-                </h1>
-                <div class="absolute -top-6 -right-6">
-                    <i class="fas fa-cloud text-purple-400 text-2xl" style="filter: drop-shadow(0 0 10px rgba(150,100,255,0.5));"></i>
-                </div>
-                <div class="absolute -bottom-6 -left-6">
-                    <i class="fas fa-star text-pink-400 text-2xl" style="filter: drop-shadow(0 0 10px rgba(255,100,150,0.5)); animation-delay: 0.5s;"></i>
-                </div>
-            </div>
-            <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
-                سحب كونية من الغاز والغبار، مشاتل النجوم وأجمل اللوحات في سماء الليل
+        <div class="text-center mb-6 md:mb-8">
+            <h1 class="text-3xl md:text-5xl font-black mb-2">
+                <span class="text-yellow-400">السدم</span>
+                <span class="text-white"> الكونية</span>
+            </h1>
+            <p class="text-sm md:text-lg text-gray-300 max-w-3xl mx-auto">
+                سحب كونية من الغاز والغبار، مشاتل النجوم وأجمل الظواهر في سماء الليل
             </p>
         </div>
 
         <!-- إحصائيات سريعة -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-8">
-            <div class="glass-card rounded-2xl p-4 text-center">
-                <i class="fas fa-cloud text-purple-400 text-3xl mb-2"></i>
-                <div class="text-2xl font-bold text-white">20+</div>
-                <div class="text-sm text-gray-400">سديم معروف</div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+            <div class="glass-card p-3 text-center">
+                <i class="fas fa-cloud text-yellow-400 text-xl md:text-2xl mb-1"></i>
+                <div class="text-lg md:text-xl font-bold text-white">20+</div>
+                <div class="text-xs text-gray-400">سديم معروف</div>
             </div>
-            <div class="glass-card rounded-2xl p-4 text-center">
-                <i class="fas fa-ruler text-blue-400 text-3xl mb-2"></i>
-                <div class="text-2xl font-bold text-white">100 سنة ضوئية</div>
-                <div class="text-sm text-gray-400">متوسط الحجم</div>
+            <div class="glass-card p-3 text-center">
+                <i class="fas fa-ruler text-blue-400 text-xl md:text-2xl mb-1"></i>
+                <div class="text-lg md:text-xl font-bold text-white">100 سنة ضوئية</div>
+                <div class="text-xs text-gray-400">متوسط الحجم</div>
             </div>
-            <div class="glass-card rounded-2xl p-4 text-center">
-                <i class="fas fa-star text-yellow-400 text-3xl mb-2"></i>
-                <div class="text-2xl font-bold text-white">1000+</div>
-                <div class="text-sm text-gray-400">نجم يولد سنوياً</div>
+            <div class="glass-card p-3 text-center">
+                <i class="fas fa-star text-yellow-400 text-xl md:text-2xl mb-1"></i>
+                <div class="text-lg md:text-xl font-bold text-white">1000+</div>
+                <div class="text-xs text-gray-400">نجم يولد</div>
             </div>
-            <div class="glass-card rounded-2xl p-4 text-center">
-                <i class="fas fa-clock text-green-400 text-3xl mb-2"></i>
-                <div class="text-2xl font-bold text-white">100,000 سنة</div>
-                <div class="text-sm text-gray-400">عمر السديم</div>
+            <div class="glass-card p-3 text-center">
+                <i class="fas fa-clock text-green-400 text-xl md:text-2xl mb-1"></i>
+                <div class="text-lg md:text-xl font-bold text-white">100,000 سنة</div>
+                <div class="text-xs text-gray-400">عمر السديم</div>
             </div>
         </div>
 
         <!-- شريط البحث السريع -->
-        <div class="max-w-2xl mx-auto mb-8">
+        <div class="max-w-2xl mx-auto mb-4">
             <div class="search-container flex items-center px-4">
-                <i class="fas fa-search text-purple-400 ml-3"></i>
-                <input type="text" id="nebulaSearch" placeholder="ابحث عن سديم..." 
-                       class="search-input py-3 md:py-4">
+                <i class="fas fa-search text-yellow-500 ml-3"></i>
+                <input type="text" id="nebulaSearch" placeholder="ابحث عن سديم..." class="search-input">
             </div>
-            <div id="nebulaSearchResults" class="search-results mt-2 hidden"></div>
+            <div id="nebulaSearchResults" class="search-results mt-1 hidden"></div>
         </div>
 
         <!-- أزرار التصفية -->
-        <div class="filters-scroll mb-8">
-            <div class="flex gap-2 md:gap-3 pb-2">
+        <div class="filters-scroll mb-6">
+            <div class="flex gap-2">
                 <button class="filter-btn active" onclick="filterNebulae('all')">الكل</button>
                 <button class="filter-btn" onclick="filterNebulae('emission')">
-                    <span class="w-3 h-3 rounded-full bg-pink-500 inline-block ml-1"></span>
+                    <span class="w-2 h-2 rounded-full bg-pink-400 inline-block ml-1"></span>
                     إشعاعية
                 </button>
                 <button class="filter-btn" onclick="filterNebulae('reflection')">
-                    <span class="w-3 h-3 rounded-full bg-blue-500 inline-block ml-1"></span>
+                    <span class="w-2 h-2 rounded-full bg-blue-400 inline-block ml-1"></span>
                     عاكسة
                 </button>
                 <button class="filter-btn" onclick="filterNebulae('planetary')">
-                    <span class="w-3 h-3 rounded-full bg-green-400 inline-block ml-1"></span>
+                    <span class="w-2 h-2 rounded-full bg-green-400 inline-block ml-1"></span>
                     كوكبية
                 </button>
                 <button class="filter-btn" onclick="filterNebulae('dark')">
-                    <span class="w-3 h-3 rounded-full bg-orange-800 inline-block ml-1"></span>
+                    <span class="w-2 h-2 rounded-full bg-purple-500 inline-block ml-1"></span>
                     مظلمة
                 </button>
                 <button class="filter-btn" onclick="filterNebulae('supernova')">
-                    <span class="w-3 h-3 rounded-full bg-orange-500 inline-block ml-1"></span>
-                    بقايا مستعر
+                    <span class="w-2 h-2 rounded-full bg-orange-400 inline-block ml-1"></span>
+                    مستعر
                 </button>
             </div>
         </div>
 
         <!-- شبكة السدم -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6" id="nebulaeGrid">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="nebulaeGrid">
             <!-- السدم ستتح هنا عبر JavaScript -->
         </div>
 
-        <!-- معلومات عن السدم -->
-        <div class="glass-card rounded-2xl p-6 mt-8 md:mt-12">
-            <h2 class="text-xl md:text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-l from-purple-400 to-pink-600">أنواع السدم</h2>
-            <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
-                <div class="text-center p-3 rounded-lg bg-purple-900/20">
-                    <div class="w-12 h-12 mx-auto rounded-full bg-pink-500/30 mb-2 glow-pink flex items-center justify-center">
-                        <i class="fas fa-fire text-pink-400"></i>
-                    </div>
-                    <div class="text-white font-bold text-sm">إشعاعية</div>
-                    <div class="text-xs text-gray-400">تتوهج بضوءها</div>
+        <!-- زر عرض المزيد -->
+        <div class="text-center mt-6" id="loadMoreContainer">
+            <button onclick="loadMore()" class="bg-yellow-500/10 border border-yellow-500/30 hover:border-yellow-500 text-yellow-400 font-bold py-2 px-6 rounded-full text-sm transition">
+                <i class="fas fa-arrow-down ml-2"></i>
+                عرض المزيد
+            </button>
+        </div>
+
+        <!-- معلومات عن أنواع السدم -->
+        <div class="glass-card p-4 mt-6">
+            <h2 class="text-base md:text-lg font-bold mb-3 text-yellow-400">أنواع السدم</h2>
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-2">
+                <div class="text-center p-2 rounded-lg bg-black/30">
+                    <div class="w-6 h-6 mx-auto rounded-full bg-pink-400/30 mb-1"></div>
+                    <div class="text-white text-xs font-bold">إشعاعية</div>
                 </div>
-                <div class="text-center p-3 rounded-lg bg-blue-900/20">
-                    <div class="w-12 h-12 mx-auto rounded-full bg-blue-500/30 mb-2 glow-blue flex items-center justify-center">
-                        <i class="fas fa-lightbulb text-blue-400"></i>
-                    </div>
-                    <div class="text-white font-bold text-sm">عاكسة</div>
-                    <div class="text-xs text-gray-400">تعكس ضوء النجوم</div>
+                <div class="text-center p-2 rounded-lg bg-black/30">
+                    <div class="w-6 h-6 mx-auto rounded-full bg-blue-400/30 mb-1"></div>
+                    <div class="text-white text-xs font-bold">عاكسة</div>
                 </div>
-                <div class="text-center p-3 rounded-lg bg-green-900/20">
-                    <div class="w-12 h-12 mx-auto rounded-full bg-green-500/30 mb-2 glow-green flex items-center justify-center">
-                        <i class="fas fa-circle text-green-400"></i>
-                    </div>
-                    <div class="text-white font-bold text-sm">كوكبية</div>
-                    <div class="text-xs text-gray-400">بقايا نجوم ميتة</div>
+                <div class="text-center p-2 rounded-lg bg-black/30">
+                    <div class="w-6 h-6 mx-auto rounded-full bg-green-400/30 mb-1"></div>
+                    <div class="text-white text-xs font-bold">كوكبية</div>
                 </div>
-                <div class="text-center p-3 rounded-lg bg-orange-900/20">
-                    <div class="w-12 h-12 mx-auto rounded-full bg-orange-500/30 mb-2 glow-orange flex items-center justify-center">
-                        <i class="fas fa-moon text-orange-400"></i>
-                    </div>
-                    <div class="text-white font-bold text-sm">مظلمة</div>
-                    <div class="text-xs text-gray-400">تحجب الضوء</div>
+                <div class="text-center p-2 rounded-lg bg-black/30">
+                    <div class="w-6 h-6 mx-auto rounded-full bg-purple-500/30 mb-1"></div>
+                    <div class="text-white text-xs font-bold">مظلمة</div>
                 </div>
-                <div class="text-center p-3 rounded-lg bg-yellow-900/20">
-                    <div class="w-12 h-12 mx-auto rounded-full bg-orange-500/30 mb-2 glow-orange flex items-center justify-center">
-                        <i class="fas fa-explosion text-orange-400"></i>
-                    </div>
-                    <div class="text-white font-bold text-sm">بقايا مستعر</div>
-                    <div class="text-xs text-gray-400">انفجارات نجمية</div>
+                <div class="text-center p-2 rounded-lg bg-black/30">
+                    <div class="w-6 h-6 mx-auto rounded-full bg-orange-400/30 mb-1"></div>
+                    <div class="text-white text-xs font-bold">مستعر</div>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- فوتر -->
-    <footer class="border-t border-purple-500/20 py-4 md:py-6 mt-8">
-        <div class="container mx-auto px-4 text-center text-gray-400">
-            <p class="text-sm md:text-base">الموسوعة الفلكية - السدم: لوحات الكون الفنية</p>
-            <p class="text-xs md:text-sm mt-2">NASA/ESA Hubble Space Telescope © 2024</p>
+    <footer class="border-t border-yellow-500/20 py-4 mt-6">
+        <div class="container mx-auto px-4 text-center text-gray-400 text-sm">
+            <p>الموسوعة الفلكية - السدم الكونية</p>
         </div>
     </footer>
     <script src="index.js" defer></script>
-    <!-- script -->
-     </html>
+    </html>
