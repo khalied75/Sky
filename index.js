@@ -53,10 +53,10 @@
             { type: 'نجم', name: 'رجل الجبار', url: 'stars/index.html' },
             { type: 'نجم', name: 'النسر الطائر', url: 'stars/index.htmll' },
             // المجرات
-            { type: 'مجرة', name: 'درب التبانة', url: 'galaxies.html' },
-            { type: 'مجرة', name: 'أندروميدا', url: 'galaxies.html' },
+            { type: 'مجرة', name: 'درب التبانة', url: 'galaxies/index.html' },
+            { type: 'مجرة', name: 'أندروميدا', url: 'galaxies/index.html' },
             // السدم
-            { type: 'سديم', name: 'سديم الجبار', url: 'nebulae.html' },
+            { type: 'سديم', name: 'سديم الجبار', url: 'galaxies/index.html' },
         ];
 
         // البحث العام
