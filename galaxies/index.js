@@ -44,7 +44,29 @@
             { id: 29, name: 'سنفروبل', nameEn: 'Sunflower (M63)', type: 'spiral', distance: '37 مليون سنة ضوئية', size: '80,000 سنة ضوئية', constellation: 'الكلاب الصيد', stars: '100 مليار', description: 'مجرة حلزونية جميلة.', facts: ['أذرعها كثيرة', 'جزء من مجموعة M51'] },
             { id: 30, name: 'العين السوداء', nameEn: 'Black Eye (M64)', type: 'spiral', distance: '17 مليون سنة ضوئية', size: '50,000 سنة ضوئية', constellation: 'الهلبة', stars: '100 مليار', description: 'مجرة ذات بقعة غبار داكنة.', facts: ['لها حزام غبار داكن', 'تدور بشكل غريب'] },
         ];
+ function openMobileMenu() {
+            document.getElementById('mobileMenu').classList.add('open');
+            let overlay = document.getElementById('menuOverlay');
+            if (!overlay) {
+                overlay = document.createElement('div');
+                overlay.className = 'mobile-menu-overlay';
+                overlay.id = 'menuOverlay';
+                overlay.onclick = closeMobileMenu;
+                document.body.appendChild(overlay);
+            }
+            setTimeout(() => overlay.classList.add('open'), 10);
+            document.body.classList.add('menu-open');
+        }
 
+        function closeMobileMenu() {
+            document.getElementById('mobileMenu').classList.remove('open');
+            const overlay = document.getElementById('menuOverlay');
+            if (overlay) {
+                overlay.classList.remove('open');
+                setTimeout(() => overlay.remove(), 300);
+            }
+            document.body.classList.remove('menu-open');
+        }
         // متغيرات للتحكم
         let currentFilter = 'all';
         let visibleCount = 6;
