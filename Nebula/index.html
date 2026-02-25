@@ -393,35 +393,36 @@
                 </div>
                 
                 <!-- أيقونات يمنى -->
-                <div class="flex items-center gap-3">
-                    <!-- زر البحث للديسكتوب -->
-                    <button onclick="toggleSearch()" class="hidden md:block text-white hover:text-yellow-400 text-xl">
-                        <i class="fas fa-search"></i>
-                    </button>
-                    
-                    <!-- زر القائمة للموبايل -->
-                    <button onclick="openMobileMenu()" class="md:hidden text-white text-2xl">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                </div>
+                <!-- أيقونات يمنى - زر البحث -->
+<div class="flex items-center gap-3">
+    <!-- زر البحث للديسكتوب -->
+    <button onclick="toggleSearch()" class="hidden md:block text-white hover:text-yellow-400 text-xl">
+        <i class="fas fa-search"></i>
+    </button>
+    
+    <!-- زر القائمة للموبايل -->
+    <button onclick="openMobileMenu()" class="md:hidden text-white text-2xl">
+        <i class="fas fa-bars"></i>
+    </button>
+</div>
             </div>
         </div>
         
-        <!-- شريط البحث المنبثق -->
-        <div id="searchBar" class="hidden border-t border-yellow-500/20 py-4">
-            <div class="container mx-auto px-4">
-                <div class="flex gap-3">
-                    <div class="flex-1 search-container flex items-center px-4">
-                        <i class="fas fa-search text-yellow-500 ml-3"></i>
-                        <input type="text" id="globalSearch" placeholder="ابحث عن سديم..." class="search-input">
-                    </div>
-                    <button onclick="toggleSearch()" class="px-4 text-gray-400 hover:text-white">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                <div id="globalSearchResults" class="search-results mt-2 hidden"></div>
+       <!-- شريط البحث المنبثق -->
+<div id="searchBar" class="hidden border-t border-yellow-500/20 py-4">
+    <div class="container mx-auto px-4">
+        <div class="flex gap-3">
+            <div class="flex-1 search-container flex items-center px-4">
+                <i class="fas fa-search text-yellow-500 ml-3"></i>
+                <input type="text" id="globalSearch" placeholder="ابحث عن كوكبة، نجم، سديم، مجرة..." class="search-input">
             </div>
+            <button onclick="toggleSearch()" class="px-4 text-gray-400 hover:text-white">
+                <i class="fas fa-times"></i>
+            </button>
         </div>
+        <div id="globalSearchResults" class="search-results mt-2 hidden"></div>
+    </div>
+</div>
     </nav>
 
     <!-- المحتوى الرئيسي -->

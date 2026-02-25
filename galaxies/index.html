@@ -446,6 +446,7 @@
     </div>
 
     <!-- الناف بار الرئيسي -->
+   <!-- الناف بار الرئيسي -->
     <nav class="glass-nav sticky top-0 z-30">
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center h-16 md:h-20">
@@ -459,7 +460,7 @@
                 
                 <!-- القائمة الرئيسية -->
                 <div class="hidden md:flex items-center gap-1">
-                    <a href="../index.html" class="nav-link flex items-center gap-2">
+                    <a href="index.html" class="nav-link flex items-center gap-2">
                         <i class="fas fa-home"></i>
                         <span>الرئيسية</span>
                     </a>
@@ -481,33 +482,37 @@
                     </a>
                 </div>
                 
-                <!-- أيقونات يمنى -->
-                <div class="flex items-center gap-3">
-                    <button onclick="toggleSearch()" class="hidden md:block text-white hover:text-yellow-400 text-xl">
-                        <i class="fas fa-search"></i>
-                    </button>
-                    <button onclick="openMobileMenu()" class="md:hidden text-white text-2xl">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                </div>
+              <!-- أيقونات يمنى - زر البحث -->
+<div class="flex items-center gap-3">
+    <!-- زر البحث للديسكتوب -->
+    <button onclick="toggleSearch()" class="hidden md:block text-white hover:text-yellow-400 text-xl">
+        <i class="fas fa-search"></i>
+    </button>
+    
+    <!-- زر القائمة للموبايل -->
+    <button onclick="openMobileMenu()" class="md:hidden text-white text-2xl">
+        <i class="fas fa-bars"></i>
+    </button>
+</div>
             </div>
         </div>
         
         <!-- شريط البحث المنبثق -->
-        <div id="searchBar" class="hidden border-t border-yellow-500/20 py-4">
-            <div class="container mx-auto px-4">
-                <div class="flex gap-3">
-                    <div class="flex-1 search-container flex items-center px-4">
-                        <i class="fas fa-search text-yellow-500 ml-3"></i>
-                        <input type="text" id="globalSearch" placeholder="ابحث عن مجرة..." class="search-input">
-                    </div>
-                    <button onclick="toggleSearch()" class="px-4 text-gray-400 hover:text-white">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                <div id="globalSearchResults" class="search-results mt-2 hidden"></div>
+        <!-- شريط البحث المنبثق -->
+<div id="searchBar" class="hidden border-t border-yellow-500/20 py-4">
+    <div class="container mx-auto px-4">
+        <div class="flex gap-3">
+            <div class="flex-1 search-container flex items-center px-4">
+                <i class="fas fa-search text-yellow-500 ml-3"></i>
+                <input type="text" id="globalSearch" placeholder="ابحث عن كوكبة، نجم، سديم، مجرة..." class="search-input">
             </div>
+            <button onclick="toggleSearch()" class="px-4 text-gray-400 hover:text-white">
+                <i class="fas fa-times"></i>
+            </button>
         </div>
+        <div id="globalSearchResults" class="search-results mt-2 hidden"></div>
+    </div>
+</div>
     </nav>
 
     <!-- المحتوى الرئيسي -->

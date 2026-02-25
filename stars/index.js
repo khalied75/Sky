@@ -88,7 +88,7 @@
                         <div class="${star.color === 'red' ? 'text-red-400' : star.color === 'blue' ? 'text-blue-400' : 'text-yellow-400'} font-bold">${star.temp}</div>
                     </div>
                 </div>
-                <div class="mt-3 flex items-center justify-between">
+                <div class="mt-3 flex text-white items-center justify-between">
                     <span class="text-xs text-gray-400">${star.distance}</span>
                     <span class="text-xs px-2 py-1 rounded-full bg-${star.color}-500/20 border border-${star.color}-500/30">${star.class}</span>
                 </div>
@@ -166,54 +166,118 @@
 📝 الوصف: ${star.description}`);
         }
 
-        // البحث
-        function setupStarSearch() {
-            const searchInput = document.getElementById('starSearch');
-            const resultsDiv = document.getElementById('starSearchResults');
-            
-            if (!searchInput) return;
-            
-            searchInput.addEventListener('input', function(e) {
-                const term = e.target.value.toLowerCase().trim();
-                
-                if (term.length < 2) {
-                    resultsDiv.classList.add('hidden');
-                    return;
-                }
-                
-                const results = starsData.filter(star => 
-                    star.name.includes(term) || 
-                    star.nameEn.toLowerCase().includes(term) ||
-                    star.constellation.includes(term)
-                );
-                
-                if (results.length > 0) {
-                    resultsDiv.classList.remove('hidden');
-                    resultsDiv.innerHTML = '';
-                    
-                    results.slice(0, 5).forEach(result => {
-                        const div = document.createElement('div');
-                        div.className = 'search-result-item p-3 hover:bg-yellow-500/10 cursor-pointer';
-                        div.innerHTML = `
-                            <div class="font-bold text-yellow-400">${result.name}</div>
-                            <div class="text-sm text-gray-400">${result.nameEn} • ${result.constellation} • ${result.type}</div>
-                        `;
-                        div.onclick = () => showStarDetails(result);
-                        resultsDiv.appendChild(div);
-                    });
-                } else {
-                    resultsDiv.classList.remove('hidden');
-                    resultsDiv.innerHTML = '<div class="p-4 text-center text-gray-400">لا توجد نتائج</div>';
-                }
-            });
-            
-            document.addEventListener('click', function(e) {
-                if (!searchInput.contains(e.target) && !resultsDiv.contains(e.target)) {
-                    resultsDiv.classList.add('hidden');
-                }
-            });
-        }
+       // متغيرات البحث
+let searchBarVisible = false;
 
+// فتح/إغلاق شريط البحث
+function toggleSearch() {
+    const searchBar = document.getElementById('searchBar');
+    searchBarVisible = !searchBarVisible;
+    
+    if (searchBarVisible) {
+        searchBar.classList.remove('hidden');
+        setTimeout(() => {
+            document.getElementById('globalSearch')?.focus();
+        }, 100);
+    } else {
+        searchBar.classList.add('hidden');
+        document.getElementById('globalSearchResults')?.classList.add('hidden');
+    }
+}
+
+// بيانات البحث الموحدة لجميع الصفحات
+const searchData = [
+    // الكوكبات
+    { type: 'كوكبة', name: 'الجبار', url: '../Patterns/index.html' },
+    { type: 'كوكبة', name: 'الدب الأكبر', url: '../Patterns/index.html' },
+    { type: 'كوكبة', name: 'ذات الكرسي', url: '../Patterns/index.html' },
+    { type: 'كوكبة', name: 'العقرب', url: '../Patterns/index.html' },
+    { type: 'كوكبة', name: 'الجوزاء', url: 'constellations.html#gemini' },
+    { type: 'كوكبة', name: 'الثور', url: '../Patterns/index.html' },
+    { type: 'كوكبة', name: 'الأسد', url: '../Patterns/index.html' },
+    { type: 'كوكبة', name: 'العذراء', url: '../Patterns/index.html' },
+    
+    // النجوم
+    { type: 'نجم', name: 'منكب الجوزاء', url: 'stars/index.html' },
+    { type: 'نجم', name: 'الشعرى اليمانية', url: 'stars/index.html' },
+    { type: 'نجم', name: 'رجل الجبار', url: 'stars/index.html' },
+    { type: 'نجم', name: 'النسر الطائر', url: 'stars/index.html' },
+    { type: 'نجم', name: 'القلب', url: 'stars/index.html' },
+    { type: 'نجم', name: 'الدبران', url: 'stars/index.html' },
+    { type: 'نجم', name: 'سهيل', url: 'stars/index.html' },
+    { type: 'نجم', name: 'النسر الواقع', url: 'stars/index.html' },
+    
+    // السدم
+    { type: 'سديم', name: 'سديم الجبار', url: '../Nebula/index.html' },
+    { type: 'سديم', name: 'سديم السرطان', url: '../Nebula/index.html' },
+    { type: 'سديم', name: 'سديم النسر', url: '../Nebula/index.html' },
+    { type: 'سديم', name: 'سديم الحلقة', url: '../Nebula/index.html' },
+    { type: 'سديم', name: 'سديم رأس الحصان', url: '../Nebula/index.html' },
+    
+    // المجرات
+    { type: 'مجرة', name: 'درب التبانة', url: '../galaxies/index.html' },
+    { type: 'مجرة', name: 'أندروميدا', url: '../galaxies/index.html' },
+    { type: 'مجرة', name: 'المثلث', url: '../galaxies/index.html' },
+    { type: 'مجرة', name: 'الدوامة', url: '../galaxies/index.html' },
+    { type: 'مجرة', name: 'السومبريرو', url: '../galaxies/index.html' },
+    { type: 'مجرة', name: 'ميسييه 87', url: '../galaxies/index.html' },
+];
+
+// إعداد البحث
+function setupGlobalSearch() {
+    const searchInput = document.getElementById('globalSearch');
+    const resultsDiv = document.getElementById('globalSearchResults');
+    
+    if (!searchInput) return;
+    
+    searchInput.addEventListener('input', function(e) {
+        const term = e.target.value.toLowerCase().trim();
+        
+        if (term.length < 2) {
+            resultsDiv.classList.add('hidden');
+            return;
+        }
+        
+        const results = searchData.filter(item => 
+            item.name.includes(term)
+        );
+        
+        if (results.length > 0) {
+            resultsDiv.classList.remove('hidden');
+            resultsDiv.innerHTML = '';
+            
+            results.slice(0, 5).forEach(result => {
+                const div = document.createElement('div');
+                div.className = 'search-result-item';
+                div.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <span class="text-xs text-yellow-400">${result.type}</span>
+                        <span class="font-bold text-white">${result.name}</span>
+                    </div>
+                `;
+                div.onclick = () => {
+                    window.location.href = result.url;
+                };
+                resultsDiv.appendChild(div);
+            });
+        } else {
+            resultsDiv.classList.remove('hidden');
+            resultsDiv.innerHTML = '<div class="p-4 text-center text-gray-400">لا توجد نتائج</div>';
+        }
+    });
+    
+    // إخفاء النتائج عند النقر خارجها
+    document.addEventListener('click', function(e) {
+        if (!searchInput.contains(e.target) && !resultsDiv.contains(e.target)) {
+            resultsDiv.classList.add('hidden');
+        }
+    });
+}
+
+// تشغيل البحث عند تحميل الصفحة
+document.addEventListener('DOMContentLoaded', function() {
+    setupGlobalSearch();
+});
         // دوال القائمة الجانبية
         function openMobileMenu() {
             document.getElementById('mobileMenu').classList.add('open');
@@ -240,7 +304,6 @@
         }
 
         // البحث العام
-        let searchBarVisible = false;
 
         function toggleSearch() {
             const searchBar = document.getElementById('searchBar');
