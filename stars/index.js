@@ -283,10 +283,10 @@ function openMobileMenu() {
         // بيانات البحث
         const searchData = [
             // الكوكبات
-            { type: 'كوكبة', name: 'الجبار', url: '../Patterns/index.html' },
-            { type: 'كوكبة', name: 'الدب الأكبر', url: '../Patterns/index.html' },
-            { type: 'كوكبة', name: 'ذات الكرسي', url: '../Patterns/index.html' },
-            { type: 'كوكبة', name: 'العقرب', url: '../Patterns/index.html' },
+            { type: 'كوكبة', name: 'الجبار', url: '../patterns/index.html' },
+            { type: 'كوكبة', name: 'الدب الأكبر', url: '../patterns/index.html' },
+            { type: 'كوكبة', name: 'ذات الكرسي', url: '../patterns/index.html' },
+            { type: 'كوكبة', name: 'العقرب', url: '../patterns/index.html' },
             // النجوم
             { type: 'نجم', name: 'منكب الجوزاء', url: 'index.html' },
             { type: 'نجم', name: 'الشعرى اليمانية', url: 'index.html' },

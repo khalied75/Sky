@@ -308,14 +308,14 @@ function toggleSearch() {
 // بيانات البحث الموحدة لجميع الصفحات
 const searchData = [
     // الكوكبات
-    { type: 'كوكبة', name: 'الجبار', url: '../Patterns/index.html' },
-    { type: 'كوكبة', name: 'الدب الأكبر', url: '../Patterns/index.html' },
-    { type: 'كوكبة', name: 'ذات الكرسي', url: '../Patterns/index.html' },
-    { type: 'كوكبة', name: 'العقرب', url: '../Patterns/index.html' },
-    { type: 'كوكبة', name: 'الجوزاء', url: 'constellations.html#gemini' },
-    { type: 'كوكبة', name: 'الثور', url: '../Patterns/index.html' },
-    { type: 'كوكبة', name: 'الأسد', url: '../Patterns/index.html' },
-    { type: 'كوكبة', name: 'العذراء', url: '../Patterns/index.html' },
+    { type: 'كوكبة', name: 'الجبار', url: '../patterns/index.html' },
+    { type: 'كوكبة', name: 'الدب الأكبر', url: '../patterns/index.html' },
+    { type: 'كوكبة', name: 'ذات الكرسي', url: '../patterns/index.html' },
+    { type: 'كوكبة', name: 'العقرب', url: '../patterns/index.html' },
+    { type: 'كوكبة', name: 'الجوزاء', url: '../patterns/index.html' },
+    { type: 'كوكبة', name: 'الثور', url: '../patterns/index.html' },
+    { type: 'كوكبة', name: 'الأسد', url: '../patterns/index.html' },
+    { type: 'كوكبة', name: 'العذراء', url: '../patterns/index.html' },
     
     // النجوم
     { type: 'نجم', name: 'منكب الجوزاء', url: '../stars/index.html' },
