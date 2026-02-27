@@ -124,7 +124,7 @@
                 ${constellation.famousStars.length > 0 ? `
                     <div class="flex flex-wrap gap-1">
                         ${constellation.famousStars.slice(0, 3).map(star => 
-                            `<span class="text-xs bg-yellow-500/10 border border-yellow-500/30 rounded-full px-2 py-1">${star}</span>`
+                            `<span class="text-xs bg-yellow-500/10 border border-yellow-500/30 rounded-full px-2 py-1 text-white">${star}</span>`
                         ).join('')}
                         ${constellation.famousStars.length > 3 ? '<span class="text-xs text-gray-500">...</span>' : ''}
                     </div>

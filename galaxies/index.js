@@ -1,4 +1,4 @@
-// 30 مجرة متنوعة
+ // 30 مجرة متنوعة
         const galaxiesData = [
             // المجرات الحلزونية
             { id: 1, name: 'درب التبانة', nameEn: 'Milky Way', type: 'barred', distance: '0 سنة ضوئية', size: '100,000 سنة ضوئية', constellation: 'الرامي', stars: '200 مليار', description: 'مجرة الوطن، مجرة حلزونية ضلعية تحتوي على نظامنا الشمسي.', facts: ['عمرها 13.6 مليار سنة', 'قطرها 100 ألف سنة ضوئية'] },
@@ -44,29 +44,7 @@
             { id: 29, name: 'سنفروبل', nameEn: 'Sunflower (M63)', type: 'spiral', distance: '37 مليون سنة ضوئية', size: '80,000 سنة ضوئية', constellation: 'الكلاب الصيد', stars: '100 مليار', description: 'مجرة حلزونية جميلة.', facts: ['أذرعها كثيرة', 'جزء من مجموعة M51'] },
             { id: 30, name: 'العين السوداء', nameEn: 'Black Eye (M64)', type: 'spiral', distance: '17 مليون سنة ضوئية', size: '50,000 سنة ضوئية', constellation: 'الهلبة', stars: '100 مليار', description: 'مجرة ذات بقعة غبار داكنة.', facts: ['لها حزام غبار داكن', 'تدور بشكل غريب'] },
         ];
- function openMobileMenu() {
-            document.getElementById('mobileMenu').classList.add('open');
-            let overlay = document.getElementById('menuOverlay');
-            if (!overlay) {
-                overlay = document.createElement('div');
-                overlay.className = 'mobile-menu-overlay';
-                overlay.id = 'menuOverlay';
-                overlay.onclick = closeMobileMenu;
-                document.body.appendChild(overlay);
-            }
-            setTimeout(() => overlay.classList.add('open'), 10);
-            document.body.classList.add('menu-open');
-        }
 
-        function closeMobileMenu() {
-            document.getElementById('mobileMenu').classList.remove('open');
-            const overlay = document.getElementById('menuOverlay');
-            if (overlay) {
-                overlay.classList.remove('open');
-                setTimeout(() => overlay.remove(), 300);
-            }
-            document.body.classList.remove('menu-open');
-        }
         // متغيرات للتحكم
         let currentFilter = 'all';
         let visibleCount = 6;
@@ -109,7 +87,7 @@
             div.innerHTML = `
                 <div class="flex justify-between items-start mb-2">
                     <h3 class="text-lg font-bold text-white">${galaxy.name}</h3>
-                    <span class="text-xs text-white px-2 py-1 rounded-full bg-black/40 border border-yellow-500/30">
+                    <span class="text-xs px-2 py-1 rounded-full bg-black/40 border text-white border-yellow-500/30">
                         ${getTypeName(galaxy.type)}
                     </span>
                 </div>
@@ -196,25 +174,76 @@
 ${factsList}`);
         }
 
-        // متغيرات البحث
-let searchBarVisible = false;
+        // البحث
+        function setupGalaxySearch() {
+            const searchInput = document.getElementById('galaxySearch');
+            const resultsDiv = document.getElementById('galaxySearchResults');
+            
+            if (!searchInput) return;
+            
+            searchInput.addEventListener('input', function(e) {
+                const term = e.target.value.toLowerCase().trim();
+                
+                if (term.length < 1) {
+                    resultsDiv.classList.add('hidden');
+                    return;
+                }
+                
+                const results = galaxiesData.filter(galaxy => 
+                    galaxy.name.includes(term) || 
+                    galaxy.nameEn.toLowerCase().includes(term) ||
+                    galaxy.constellation.includes(term)
+                );
+                
+                if (results.length > 0) {
+                    resultsDiv.classList.remove('hidden');
+                    resultsDiv.innerHTML = '';
+                    
+                    results.slice(0, 3).forEach(result => {
+                        const div = document.createElement('div');
+                        div.className = 'search-result-item';
+                        div.innerHTML = `
+                            <div class="font-bold text-sm text-yellow-400">${result.name}</div>
+                            <div class="text-xs text-gray-400">${result.nameEn} • ${getTypeName(result.type)}</div>
+                        `;
+                        div.onclick = () => {
+                            showGalaxyDetails(result);
+                            resultsDiv.classList.add('hidden');
+                            searchInput.value = '';
+                        };
+                        resultsDiv.appendChild(div);
+                    });
+                } else {
+                    resultsDiv.classList.remove('hidden');
+                    resultsDiv.innerHTML = '<div class="p-3 text-center text-gray-400 text-sm">لا توجد نتائج</div>';
+                }
+            });
+        }
 
-// فتح/إغلاق شريط البحث
-function toggleSearch() {
-    const searchBar = document.getElementById('searchBar');
-    searchBarVisible = !searchBarVisible;
-    
-    if (searchBarVisible) {
-        searchBar.classList.remove('hidden');
-        setTimeout(() => {
-            document.getElementById('globalSearch')?.focus();
-        }, 100);
-    } else {
-        searchBar.classList.add('hidden');
-        document.getElementById('globalSearchResults')?.classList.add('hidden');
-    }
-}
+        // دوال القائمة الجانبية
+        function openMobileMenu() {
+            document.getElementById('mobileMenu').classList.add('open');
+            let overlay = document.getElementById('menuOverlay');
+            if (!overlay) {
+                overlay = document.createElement('div');
+                overlay.className = 'mobile-menu-overlay';
+                overlay.id = 'menuOverlay';
+                overlay.onclick = closeMobileMenu;
+                document.body.appendChild(overlay);
+            }
+            setTimeout(() => overlay.classList.add('open'), 10);
+            document.body.classList.add('menu-open');
+        }
 
+        function closeMobileMenu() {
+            document.getElementById('mobileMenu').classList.remove('open');
+            const overlay = document.getElementById('menuOverlay');
+            if (overlay) {
+                overlay.classList.remove('open');
+                setTimeout(() => overlay.remove(), 300);
+            }
+            document.body.classList.remove('menu-open');
+        }
 // بيانات البحث الموحدة لجميع الصفحات
 const searchData = [
     // الكوكبات
@@ -222,7 +251,7 @@ const searchData = [
     { type: 'كوكبة', name: 'الدب الأكبر', url: '../Patterns/index.html' },
     { type: 'كوكبة', name: 'ذات الكرسي', url: '../Patterns/index.html' },
     { type: 'كوكبة', name: 'العقرب', url: '../Patterns/index.html' },
-    { type: 'كوكبة', name: 'الجوزاء', url: 'constellations.html#gemini' },
+    { type: 'كوكبة', name: 'الجوزاء', url: '../Patterns/index.html' },
     { type: 'كوكبة', name: 'الثور', url: '../Patterns/index.html' },
     { type: 'كوكبة', name: 'الأسد', url: '../Patterns/index.html' },
     { type: 'كوكبة', name: 'العذراء', url: '../Patterns/index.html' },
@@ -308,6 +337,22 @@ function setupGlobalSearch() {
 document.addEventListener('DOMContentLoaded', function() {
     setupGlobalSearch();
 });
+        // البحث العام
+        let searchBarVisible = false;
+
+        function toggleSearch() {
+            const searchBar = document.getElementById('searchBar');
+            searchBarVisible = !searchBarVisible;
+            
+            if (searchBarVisible) {
+                searchBar.classList.remove('hidden');
+                setTimeout(() => {
+                    document.getElementById('globalSearch')?.focus();
+                }, 100);
+            } else {
+                searchBar.classList.add('hidden');
+            }
+        }
 
         // تهيئة الصفحة
         document.addEventListener('DOMContentLoaded', function() {

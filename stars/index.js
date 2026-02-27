@@ -1,4 +1,4 @@
-   // بيانات النجوم مع ألوانها المختلفة
+       // بيانات النجوم مع ألوانها المختلفة
         const starsData = [
             // النجوم الحمراء العملاقة
             { id: 1, name: 'منكب الجوزاء', nameEn: 'Betelgeuse', type: 'red', class: 'M', temp: '3,500°C', magnitude: '0.45', distance: '640 سنة ضوئية', constellation: 'الجبار', description: 'نجم عملاق أحمر في كوكبة الجبار، يقترب من نهاية حياته.', color: 'red', luminosity: '100,000 شمس' },
@@ -88,9 +88,9 @@
                         <div class="${star.color === 'red' ? 'text-red-400' : star.color === 'blue' ? 'text-blue-400' : 'text-yellow-400'} font-bold">${star.temp}</div>
                     </div>
                 </div>
-                <div class="mt-3 flex text-white items-center justify-between">
+                <div class="mt-3 flex items-center justify-between">
                     <span class="text-xs text-gray-400">${star.distance}</span>
-                    <span class="text-xs px-2 py-1 rounded-full bg-${star.color}-500/20 border border-${star.color}-500/30">${star.class}</span>
+                    <span class="text-xs text-white px-2 py-1 rounded-full bg-${star.color}-500/20 border border-${star.color}-500/30">${star.class}</span>
                 </div>
             `;
             
@@ -166,118 +166,54 @@
 📝 الوصف: ${star.description}`);
         }
 
-       // متغيرات البحث
-let searchBarVisible = false;
-
-// فتح/إغلاق شريط البحث
-function toggleSearch() {
-    const searchBar = document.getElementById('searchBar');
-    searchBarVisible = !searchBarVisible;
-    
-    if (searchBarVisible) {
-        searchBar.classList.remove('hidden');
-        setTimeout(() => {
-            document.getElementById('globalSearch')?.focus();
-        }, 100);
-    } else {
-        searchBar.classList.add('hidden');
-        document.getElementById('globalSearchResults')?.classList.add('hidden');
-    }
-}
-
-// بيانات البحث الموحدة لجميع الصفحات
-const searchData = [
-    // الكوكبات
-    { type: 'كوكبة', name: 'الجبار', url: '../Patterns/index.html' },
-    { type: 'كوكبة', name: 'الدب الأكبر', url: '../Patterns/index.html' },
-    { type: 'كوكبة', name: 'ذات الكرسي', url: '../Patterns/index.html' },
-    { type: 'كوكبة', name: 'العقرب', url: '../Patterns/index.html' },
-    { type: 'كوكبة', name: 'الجوزاء', url: 'constellations.html#gemini' },
-    { type: 'كوكبة', name: 'الثور', url: '../Patterns/index.html' },
-    { type: 'كوكبة', name: 'الأسد', url: '../Patterns/index.html' },
-    { type: 'كوكبة', name: 'العذراء', url: '../Patterns/index.html' },
-    
-    // النجوم
-    { type: 'نجم', name: 'منكب الجوزاء', url: 'stars/index.html' },
-    { type: 'نجم', name: 'الشعرى اليمانية', url: 'stars/index.html' },
-    { type: 'نجم', name: 'رجل الجبار', url: 'stars/index.html' },
-    { type: 'نجم', name: 'النسر الطائر', url: 'stars/index.html' },
-    { type: 'نجم', name: 'القلب', url: 'stars/index.html' },
-    { type: 'نجم', name: 'الدبران', url: 'stars/index.html' },
-    { type: 'نجم', name: 'سهيل', url: 'stars/index.html' },
-    { type: 'نجم', name: 'النسر الواقع', url: 'stars/index.html' },
-    
-    // السدم
-    { type: 'سديم', name: 'سديم الجبار', url: '../Nebula/index.html' },
-    { type: 'سديم', name: 'سديم السرطان', url: '../Nebula/index.html' },
-    { type: 'سديم', name: 'سديم النسر', url: '../Nebula/index.html' },
-    { type: 'سديم', name: 'سديم الحلقة', url: '../Nebula/index.html' },
-    { type: 'سديم', name: 'سديم رأس الحصان', url: '../Nebula/index.html' },
-    
-    // المجرات
-    { type: 'مجرة', name: 'درب التبانة', url: '../galaxies/index.html' },
-    { type: 'مجرة', name: 'أندروميدا', url: '../galaxies/index.html' },
-    { type: 'مجرة', name: 'المثلث', url: '../galaxies/index.html' },
-    { type: 'مجرة', name: 'الدوامة', url: '../galaxies/index.html' },
-    { type: 'مجرة', name: 'السومبريرو', url: '../galaxies/index.html' },
-    { type: 'مجرة', name: 'ميسييه 87', url: '../galaxies/index.html' },
-];
-
-// إعداد البحث
-function setupGlobalSearch() {
-    const searchInput = document.getElementById('globalSearch');
-    const resultsDiv = document.getElementById('globalSearchResults');
-    
-    if (!searchInput) return;
-    
-    searchInput.addEventListener('input', function(e) {
-        const term = e.target.value.toLowerCase().trim();
-        
-        if (term.length < 2) {
-            resultsDiv.classList.add('hidden');
-            return;
-        }
-        
-        const results = searchData.filter(item => 
-            item.name.includes(term)
-        );
-        
-        if (results.length > 0) {
-            resultsDiv.classList.remove('hidden');
-            resultsDiv.innerHTML = '';
+        // البحث
+        function setupStarSearch() {
+            const searchInput = document.getElementById('starSearch');
+            const resultsDiv = document.getElementById('starSearchResults');
             
-            results.slice(0, 5).forEach(result => {
-                const div = document.createElement('div');
-                div.className = 'search-result-item';
-                div.innerHTML = `
-                    <div class="flex items-center gap-3">
-                        <span class="text-xs text-yellow-400">${result.type}</span>
-                        <span class="font-bold text-white">${result.name}</span>
-                    </div>
-                `;
-                div.onclick = () => {
-                    window.location.href = result.url;
-                };
-                resultsDiv.appendChild(div);
+            if (!searchInput) return;
+            
+            searchInput.addEventListener('input', function(e) {
+                const term = e.target.value.toLowerCase().trim();
+                
+                if (term.length < 2) {
+                    resultsDiv.classList.add('hidden');
+                    return;
+                }
+                
+                const results = starsData.filter(star => 
+                    star.name.includes(term) || 
+                    star.nameEn.toLowerCase().includes(term) ||
+                    star.constellation.includes(term)
+                );
+                
+                if (results.length > 0) {
+                    resultsDiv.classList.remove('hidden');
+                    resultsDiv.innerHTML = '';
+                    
+                    results.slice(0, 5).forEach(result => {
+                        const div = document.createElement('div');
+                        div.className = 'search-result-item p-3 hover:bg-yellow-500/10 cursor-pointer';
+                        div.innerHTML = `
+                            <div class="font-bold text-yellow-400">${result.name}</div>
+                            <div class="text-sm text-gray-400">${result.nameEn} • ${result.constellation} • ${result.type}</div>
+                        `;
+                        div.onclick = () => showStarDetails(result);
+                        resultsDiv.appendChild(div);
+                    });
+                } else {
+                    resultsDiv.classList.remove('hidden');
+                    resultsDiv.innerHTML = '<div class="p-4 text-center text-gray-400">لا توجد نتائج</div>';
+                }
             });
-        } else {
-            resultsDiv.classList.remove('hidden');
-            resultsDiv.innerHTML = '<div class="p-4 text-center text-gray-400">لا توجد نتائج</div>';
+            
+            document.addEventListener('click', function(e) {
+                if (!searchInput.contains(e.target) && !resultsDiv.contains(e.target)) {
+                    resultsDiv.classList.add('hidden');
+                }
+            });
         }
-    });
-    
-    // إخفاء النتائج عند النقر خارجها
-    document.addEventListener('click', function(e) {
-        if (!searchInput.contains(e.target) && !resultsDiv.contains(e.target)) {
-            resultsDiv.classList.add('hidden');
-        }
-    });
-}
 
-// تشغيل البحث عند تحميل الصفحة
-document.addEventListener('DOMContentLoaded', function() {
-    setupGlobalSearch();
-});
         // دوال القائمة الجانبية
         function openMobileMenu() {
             document.getElementById('mobileMenu').classList.add('open');
@@ -302,14 +238,173 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             document.body.classList.remove('menu-open');
         }
+function openMobileMenu() {
+            document.getElementById('mobileMenu').classList.add('open');
+            let overlay = document.getElementById('menuOverlay');
+            if (!overlay) {
+                overlay = document.createElement('div');
+                overlay.className = 'mobile-menu-overlay';
+                overlay.id = 'menuOverlay';
+                overlay.onclick = closeMobileMenu;
+                document.body.appendChild(overlay);
+            }
+            setTimeout(() => overlay.classList.add('open'), 10);
+            document.body.classList.add('menu-open');
+        }
 
-        // البحث العام
+        function closeMobileMenu() {
+            document.getElementById('mobileMenu').classList.remove('open');
+            const overlay = document.getElementById('menuOverlay');
+            if (overlay) {
+                overlay.classList.remove('open');
+                setTimeout(() => overlay.remove(), 300);
+            }
+            document.body.classList.remove('menu-open');
+        }
+
+        // دوال البحث
+        let searchBarVisible = false;
 
         function toggleSearch() {
             const searchBar = document.getElementById('searchBar');
             searchBarVisible = !searchBarVisible;
             
             if (searchBarVisible) {
+                searchBar.classList.remove('hidden');
+                setTimeout(() => {
+                    document.getElementById('globalSearch')?.focus();
+                }, 100);
+            } else {
+                searchBar.classList.add('hidden');
+                document.getElementById('globalSearchResults')?.classList.add('hidden');
+            }
+        }
+
+        // بيانات البحث
+        const searchData = [
+            // الكوكبات
+            { type: 'كوكبة', name: 'الجبار', url: '../Patterns/index.html' },
+            { type: 'كوكبة', name: 'الدب الأكبر', url: '../Patterns/index.html' },
+            { type: 'كوكبة', name: 'ذات الكرسي', url: '../Patterns/index.html' },
+            { type: 'كوكبة', name: 'العقرب', url: '../Patterns/index.html' },
+            // النجوم
+            { type: 'نجم', name: 'منكب الجوزاء', url: 'index.html' },
+            { type: 'نجم', name: 'الشعرى اليمانية', url: 'index.html' },
+            { type: 'نجم', name: 'رجل الجبار', url: 'index.html' },
+            { type: 'نجم', name: 'النسر الطائر', url: 'index.htmll' },
+            // المجرات
+            { type: 'مجرة', name: 'درب التبانة', url: '../galaxies/index.html' },
+            { type: 'مجرة', name: 'أندروميدا', url: '../galaxies/index.html' },
+            // السدم
+            { type: 'سديم', name: 'سديم الجبار', url: '../galaxies/index.html' },
+        ];
+
+        // البحث العام
+        function setupSearch(inputId, resultsId) {
+            const searchInput = document.getElementById(inputId);
+            const resultsDiv = document.getElementById(resultsId);
+            
+            if (!searchInput) return;
+            
+            searchInput.addEventListener('input', function(e) {
+                const term = e.target.value.toLowerCase().trim();
+                
+                if (term.length < 2) {
+                    resultsDiv.classList.add('hidden');
+                    return;
+                }
+                
+                const results = searchData.filter(item => 
+                    item.name.includes(term)
+                );
+                
+                if (results.length > 0) {
+                    resultsDiv.classList.remove('hidden');
+                    resultsDiv.innerHTML = '';
+                    
+                    results.slice(0, 5).forEach(result => {
+                        const div = document.createElement('div');
+                        div.className = 'search-result-item';
+                        div.innerHTML = `
+                            <div class="flex items-center gap-3">
+                                <span class="text-xs text-yellow-400">${result.type}</span>
+                                <span class="font-bold text-white">${result.name}</span>
+                            </div>
+                        `;
+                        div.onclick = () => {
+                            window.location.href = result.url;
+                        };
+                        resultsDiv.appendChild(div);
+                    });
+                } else {
+                    resultsDiv.classList.remove('hidden');
+                    resultsDiv.innerHTML = '<div class="p-4 text-center text-gray-400">لا توجد نتائج</div>';
+                }
+            });
+        }
+
+        // أرقام متحركة
+        function animateNumbers() {
+            document.querySelectorAll('.counter').forEach(counter => {
+                const target = counter.innerText;
+                if (target.includes('+')) return;
+                
+                const num = parseInt(target);
+                if (isNaN(num)) return;
+                
+                let current = 0;
+                const increment = num / 30;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= num) {
+                        counter.innerText = target;
+                        clearInterval(timer);
+                    } else {
+                        counter.innerText = Math.floor(current);
+                    }
+                }, 30);
+            });
+        }
+
+        // تشغيل كل شيء عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            setupSearch('globalSearch', 'globalSearchResults');
+            setupSearch('quickSearch', 'quickSearchResults');
+            animateNumbers();
+            
+            // إغلاق القائمة عند النقر على الروابط
+            document.querySelectorAll('.mobile-menu a').forEach(link => {
+                link.addEventListener('click', closeMobileMenu);
+            });
+            
+            // إخفاء نتائج البحث عند النقر خارجها
+            document.addEventListener('click', function(e) {
+                const globalSearch = document.getElementById('globalSearch');
+                const globalResults = document.getElementById('globalSearchResults');
+                const quickSearch = document.getElementById('quickSearch');
+                const quickResults = document.getElementById('quickSearchResults');
+                
+                if (globalSearch && globalResults) {
+                    if (!globalSearch.contains(e.target) && !globalResults.contains(e.target)) {
+                        globalResults.classList.add('hidden');
+                    }
+                }
+                
+                if (quickSearch && quickResults) {
+                    if (!quickSearch.contains(e.target) && !quickResults.contains(e.target)) {
+                        quickResults.classList.add('hidden');
+                    }
+                }
+            });
+        });
+        // البحث العام
+        let searchBarVisible2 = false;
+
+        function toggleSearch() {
+            const searchBar = document.getElementById('searchBar');
+            searchBarVisible2 = !searchBarVisible2;
+            
+            if (searchBarVisible2) {
                 searchBar.classList.remove('hidden');
                 setTimeout(() => {
                     document.getElementById('globalSearch')?.focus();
