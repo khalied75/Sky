@@ -334,29 +334,29 @@
         </div>
         
         <nav class="flex flex-col gap-2">
-            <a href="index.html" class="text-white text-lg py-3 px-4 rounded-xl hover:bg-yellow-500/20 transition flex items-center gap-3">
+            <a href="../index.html" class="text-white text-lg py-3 px-4 rounded-xl hover:bg-yellow-500/20 transition flex items-center gap-3">
                 <i class="fas fa-home text-yellow-400 w-6"></i>
                 <span>الرئيسية</span>
             </a>
             
             <div class="border-b border-yellow-500/10 pb-2">
                 <div class="text-yellow-400 text-sm px-4 py-2">الكون</div>
-                <a href="constellations.html" class="text-white text-lg py-3 pr-12 px-4 rounded-xl hover:bg-yellow-500/20 transition flex items-center gap-3">
+                <a href="../patterns/index.html" class="text-white text-lg py-3 pr-12 px-4 rounded-xl hover:bg-yellow-500/20 transition flex items-center gap-3">
                     <i class="fas fa-star text-yellow-400 w-6"></i>
                     <span>الكوكبات</span>
                     <span class="mr-auto text-sm text-gray-400">88</span>
                 </a>
-                <a href="stars.html" class="text-white text-lg py-3 pr-12 px-4 rounded-xl hover:bg-yellow-500/20 transition flex items-center gap-3">
+                <a href="../stars/index.html" class="text-white text-lg py-3 pr-12 px-4 rounded-xl hover:bg-yellow-500/20 transition flex items-center gap-3">
                     <i class="fas fa-sun text-yellow-400 w-6"></i>
                     <span>النجوم</span>
                     <span class="mr-auto text-sm text-gray-400">200+</span>
                 </a>
-                <a href="nebulae.html" class="text-white text-lg py-3 pr-12 px-4 rounded-xl hover:bg-yellow-500/20 transition flex items-center gap-3">
+                <a href="../Nebula/index.html" class="text-white text-lg py-3 pr-12 px-4 rounded-xl hover:bg-yellow-500/20 transition flex items-center gap-3">
                     <i class="fas fa-cloud text-yellow-400 w-6"></i>
                     <span>السدم</span>
                     <span class="mr-auto text-sm text-gray-400">20+</span>
                 </a>
-                <a href="galaxies.html" class="text-white text-lg py-3 pr-12 px-4 rounded-xl hover:bg-yellow-500/20 transition flex items-center gap-3">
+                <a href="../galaxies/index.html" class="text-white text-lg py-3 pr-12 px-4 rounded-xl hover:bg-yellow-500/20 transition flex items-center gap-3">
                     <i class="fas fa-galaxy text-yellow-400 w-6"></i>
                     <span>المجرات</span>
                     <span class="mr-auto text-sm text-gray-400">30+</span>
@@ -396,55 +396,59 @@
                 
                 <!-- القائمة الرئيسية -->
                 <div class="hidden md:flex items-center gap-1">
-                    <a href="index.html" class="nav-link flex items-center gap-2">
+                    <a href="../index.html" class="nav-link flex items-center gap-2">
                         <i class="fas fa-home"></i>
                         <span>الرئيسية</span>
                     </a>
-                    <a href="constellations.html" class="nav-link flex items-center gap-2">
+                    <a href="../patterns/index.html" class="nav-link flex items-center gap-2">
                         <i class="fas fa-star"></i>
                         <span>الكوكبات</span>
                     </a>
-                    <a href="stars.html" class="nav-link flex items-center gap-2">
+                    <a href="../stars/index.html" class="nav-link flex items-center gap-2">
                         <i class="fas fa-sun"></i>
                         <span>النجوم</span>
                     </a>
-                    <a href="nebulae.html" class="nav-link flex items-center gap-2">
+                    <a href="../Nebula/index.html" class="nav-link flex items-center gap-2">
                         <i class="fas fa-cloud"></i>
                         <span>السدم</span>
                     </a>
-                    <a href="galaxies.html" class="nav-link flex items-center gap-2">
+                    <a href="../galaxies/index.html" class="nav-link flex items-center gap-2">
                         <i class="fas fa-galaxy"></i>
                         <span>المجرات</span>
                     </a>
                 </div>
                 
                 <!-- أيقونات يمنى -->
-                <div class="flex items-center gap-3">
-                    <button onclick="toggleSearch()" class="hidden md:block text-white hover:text-yellow-400 text-xl">
-                        <i class="fas fa-search"></i>
-                    </button>
-                    <button onclick="openMobileMenu()" class="md:hidden text-white text-2xl">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                </div>
+                <!-- أيقونات يمنى - زر البحث -->
+<div class="flex items-center gap-3">
+    <!-- زر البحث للديسكتوب -->
+    <button onclick="toggleSearch()" class="hidden md:block text-white hover:text-yellow-400 text-xl">
+        <i class="fas fa-search"></i>
+    </button>
+    
+    <!-- زر القائمة للموبايل -->
+    <button onclick="openMobileMenu()" class="md:hidden text-white text-2xl">
+        <i class="fas fa-bars"></i>
+    </button>
+</div>
             </div>
         </div>
         
-        <!-- شريط البحث المنبثق -->
-        <div id="searchBar" class="hidden border-t border-yellow-500/20 py-4">
-            <div class="container mx-auto px-4">
-                <div class="flex gap-3">
-                    <div class="flex-1 search-container flex items-center px-4">
-                        <i class="fas fa-search text-yellow-500 ml-3"></i>
-                        <input type="text" id="globalSearch" placeholder="ابحث..." class="search-input">
-                    </div>
-                    <button onclick="toggleSearch()" class="px-4 text-gray-400 hover:text-white">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                <div id="globalSearchResults" class="search-results mt-2 hidden"></div>
+      <!-- شريط البحث المنبثق -->
+<div id="searchBar" class="hidden border-t border-yellow-500/20 py-4">
+    <div class="container mx-auto px-4">
+        <div class="flex gap-3">
+            <div class="flex-1 search-container flex items-center px-4">
+                <i class="fas fa-search text-yellow-500 ml-3"></i>
+                <input type="text" id="globalSearch" placeholder="ابحث عن كوكبة، نجم، سديم، مجرة..." class="search-input">
             </div>
+            <button onclick="toggleSearch()" class="px-4 text-gray-400 hover:text-white">
+                <i class="fas fa-times"></i>
+            </button>
         </div>
+        <div id="globalSearchResults" class="search-results mt-2 hidden"></div>
+    </div>
+</div>
     </nav>
 
     <!-- المحتوى الرئيسي -->
@@ -508,7 +512,7 @@
                         شغفي بعلم الفلك
                     </h2>
                     <p class="text-gray-300 leading-relaxed mb-4">
-                        منذ الصغر وأنا أتأمل السماء الليلية وأتساءل عن أسرار الكون. كانت النجوم أول لغة تعلمتها، 
+                         أتأمل السماء الليلية وأتساءل عن أسرار الكون. كانت النجوم أول لغة تعلمتها، 
                         والمجرات حلمي البعيد. دراستي لهندسة البرمجيات منحتني الأدوات لتحويل هذا الشغف إلى واقع ملموس.
                     </p>
                     <p class="text-gray-300 leading-relaxed">
