@@ -1,0 +1,850 @@
+ <!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>الثقوب السوداء - الموسوعة الفلكية</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <!-- MathJax للصيغ الرياضية -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <style>
+        * {
+            font-family: 'Tajawal', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0a0f1e 0%, #0b1a2e 50%, #0f212f 100%);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* خلفية النجوم */
+        .stars, .twinkling {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .stars {
+            background: #000 url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48Y2lyY2xlIGN4PSI2IiBjeT0iMTQiIHI9IjEiIGZpbGw9IndoaXRlIiAvPjxjaXJjbGUgY3g9IjE2MCIgY3k9IjYwIiByPSIxLjUiIGZpbGw9IndoaXRlIiAvPjxjaXJjbGUgY3g9IjQwIiBjeT0iMjAwIiByPSIxLjIiIGZpbGw9IndoaXRlIiAvPjwvc3ZnPg==') repeat;
+            background-size: 300px 300px;
+            opacity: 0.8;
+        }
+        
+        .twinkling {
+            background: transparent url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48Y2lyY2xlIGN4PSI4MCIgY3k9IjQwIiByPSIyIiBmaWxsPSIjZmZmZmZmIiBvcGFjaXR5PSIwLjgiIC8+PC9zdmc+') repeat;
+            background-size: 300px 300px;
+            animation: twinkle 4s ease-in-out infinite;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+        
+        .content {
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* ===== الناف بار الموحد ===== */
+        .glass-nav {
+            background: rgba(5, 10, 20, 0.95);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.15);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        
+        .nav-link {
+            color: #9ca3af;
+            transition: color 0.2s;
+            font-size: 1rem;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .nav-link:hover {
+            color: #ffd700;
+        }
+        
+        .nav-link.active {
+            color: #ffd700;
+            background: rgba(255, 215, 0, 0.1);
+        }
+        
+        .star-glow {
+            filter: drop-shadow(0 0 8px #ffd700);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); }
+        }
+        
+        /* القائمة الجانبية للموبايل */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 85%;
+            max-width: 350px;
+            height: 100vh;
+            background: rgba(5, 10, 20, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 1000;
+            transition: right 0.3s ease;
+            padding: 25px 20px;
+            border-left: 1px solid rgba(255, 215, 0, 0.2);
+            overflow-y: auto;
+        }
+        
+        .mobile-menu.open {
+            right: 0;
+        }
+        
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            z-index: 999;
+            display: none;
+        }
+        
+        .mobile-menu-overlay.open {
+            display: block;
+        }
+        
+        body.menu-open {
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+        }
+        
+        /* ===== تصميم خاص للصفحة ===== */
+        
+        /* بطاقات زجاجية */
+        .glass-card {
+            background: rgba(10, 15, 30, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            border-radius: 24px;
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            border-color: rgba(255, 215, 0, 0.4);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 215, 0, 0.1);
+        }
+        
+        /* بطاقات القوانين */
+        .law-card {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-right: 4px solid #ffd700;
+        }
+        
+        .law-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #ffd700;
+            margin-bottom: 10px;
+        }
+        
+        .law-equation {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.3rem;
+            color: white;
+            margin: 15px 0;
+            direction: ltr;
+        }
+        
+        /* حاويات الفيديو */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 20px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* أنواع الثقوب السوداء */
+        .type-card {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 16px;
+            padding: 16px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            transition: all 0.3s;
+            height: 100%;
+        }
+        
+        .type-card:hover {
+            border-color: #ffd700;
+            transform: translateY(-5px);
+        }
+        
+        .type-icon {
+            font-size: 2.5rem;
+            color: #ffd700;
+            margin-bottom: 10px;
+        }
+        
+        /* شريط البحث */
+        .search-container {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 50px;
+            transition: all 0.2s;
+        }
+        
+        .search-container:focus-within {
+            border-color: #ffd700;
+            background: rgba(20, 15, 30, 0.8);
+        }
+        
+        .search-input {
+            background: transparent;
+            border: none;
+            color: white;
+            padding: 12px 16px;
+            width: 100%;
+            font-size: 0.95rem;
+        }
+        
+        .search-input:focus {
+            outline: none;
+        }
+        
+        .search-results {
+            background: rgba(15, 10, 25, 0.98);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 16px;
+            max-height: 300px;
+            overflow-y: auto;
+            position: absolute;
+            width: 100%;
+            z-index: 100;
+            margin-top: 5px;
+        }
+        
+        .search-result-item {
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+            cursor: pointer;
+        }
+        
+        .search-result-item:hover {
+            background: rgba(255, 215, 0, 0.1);
+        }
+        
+        /* أزرار التصنيفات */
+        .filter-btn {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 30px;
+            transition: all 0.2s;
+            cursor: pointer;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+        
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: #ffd700;
+        }
+        
+        .filters-scroll {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            padding-bottom: 8px;
+        }
+        
+        .filters-scroll::-webkit-scrollbar {
+            display: none;
+        }
+        
+        /* صندوق المعلومات */
+        .info-box {
+            background: rgba(255, 215, 0, 0.05);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 16px;
+            padding: 16px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- خلفية النجوم -->
+    <div class="stars"></div>
+    <div class="twinkling"></div>
+
+    <!-- القائمة الجانبية للموبايل -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-2xl font-bold text-yellow-400">القائمة</h2>
+            <button onclick="closeMobileMenu()" class="text-white text-2xl w-12 h-12 flex items-center justify-center hover:bg-yellow-500/20 rounded-full transition">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="text-center mb-8">
+            <div class="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center mb-3">
+                <i class="fas fa-globe text-5xl text-black"></i>
+            </div>
+            <h3 class="text-white font-bold">الموسوعة الفلكية</h3>
+            <p class="text-gray-400 text-sm">اكتشف أسرار الكون</p>
+        </div>
+        
+        <nav class="flex flex-col gap-2">
+            <a href="../index.html" class="text-white text-lg py-3 px-4 rounded-xl hover:bg-yellow-500/20 transition flex items-center gap-3">
+                <i class="fas fa-home text-yellow-400 w-6"></i>
+                <span>الرئيسية</span>
+            </a>
+            
+            <div class="border-b border-yellow-500/10 pb-2">
+                <div class="text-yellow-400 text-sm px-4 py-2">الكون</div>
+                <a href="../patterns/index.html" class="text-white text-lg py-3 pr-12 px-4 rounded-xl hover:bg-yellow-500/20 transition flex items-center gap-3">
+                    <i class="fas fa-star text-yellow-400 w-6"></i>
+                    <span>الكوكبات</span>
+                    <span class="mr-auto text-sm text-gray-400">88</span>
+                </a>
+                <a href="../stars/index.html" class="text-white text-lg py-3 pr-12 px-4 rounded-xl hover:bg-yellow-500/20 transition flex items-center gap-3">
+                    <i class="fas fa-sun text-yellow-400 w-6"></i>
+                    <span>النجوم</span>
+                    <span class="mr-auto text-sm text-gray-400">200+</span>
+                </a>
+                <a href="../Nebula/index.html" class="text-white text-lg py-3 pr-12 px-4 rounded-xl hover:bg-yellow-500/20 transition flex items-center gap-3">
+                    <i class="fas fa-cloud text-yellow-400 w-6"></i>
+                    <span>السدم</span>
+                    <span class="mr-auto text-sm text-gray-400">20+</span>
+                </a>
+                <a href="../galaxies/index.html" class="text-white text-lg py-3 pr-12 px-4 rounded-xl hover:bg-yellow-500/20 transition flex items-center gap-3">
+                    <i class="fas fa-galaxy text-yellow-400 w-6"></i>
+                    <span>المجرات</span>
+                    <span class="mr-auto text-sm text-gray-400">30+</span>
+                </a>
+            </div>
+            
+            <div class="border-b border-yellow-500/10 pb-2">
+                <div class="text-yellow-400 text-sm px-4 py-2">الظواهر الكونية</div>
+                <a href="blackholes.html" class="text-white text-lg py-3 pr-12 px-4 rounded-xl hover:bg-yellow-500/20 transition flex items-center gap-3 bg-yellow-500/20">
+                    <i class="fas fa-circle text-yellow-400 w-6"></i>
+                    <span>الثقوب السوداء</span>
+                </a>
+                <a href="solar-system.html" class="text-white text-lg py-3 pr-12 px-4 rounded-xl hover:bg-yellow-500/20 transition flex items-center gap-3">
+                    <i class="fas fa-planet-ringed text-yellow-400 w-6"></i>
+                    <span>المجموعة الشمسية</span>
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- الناف بار الرئيسي -->
+    <nav class="glass-nav sticky top-0 z-30">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-16 md:h-20">
+                <!-- الشعار -->
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-meteor text-yellow-400 text-2xl star-glow"></i>
+                    <a href="index.html" class="text-xl font-bold text-white">
+                        <span class="text-yellow-400">الفلك</span> بيديا
+                    </a>
+                </div>
+                
+                <!-- القائمة الرئيسية -->
+                <div class="hidden md:flex items-center gap-1">
+                    <a href="../index.html" class="nav-link flex items-center gap-2">
+                        <i class="fas fa-home"></i>
+                        <span>الرئيسية</span>
+                    </a>
+                    <a href="../patterns/index.html" class="nav-link flex items-center gap-2">
+                        <i class="fas fa-star"></i>
+                        <span>الكوكبات</span>
+                    </a>
+                    <a href="../stars/index.html" class="nav-link flex items-center gap-2">
+                        <i class="fas fa-sun"></i>
+                        <span>النجوم</span>
+                    </a>
+                    <a href="../Nebula/index.html" class="nav-link flex items-center gap-2">
+                        <i class="fas fa-cloud"></i>
+                        <span>السدم</span>
+                    </a>
+                    <a href="../galaxies/index.html" class="nav-link flex items-center gap-2">
+                        <i class="fas fa-galaxy"></i>
+                        <span>المجرات</span>
+                    </a>
+                </div>
+                
+                <!-- أيقونات يمنى -->
+               <!-- أيقونات يمنى - زر البحث -->
+<div class="flex items-center gap-3">
+    <!-- زر البحث للديسكتوب -->
+    <button onclick="toggleSearch()" class="hidden md:block text-white hover:text-yellow-400 text-xl">
+        <i class="fas fa-search"></i>
+    </button>
+    
+    <!-- زر القائمة للموبايل -->
+    <button onclick="openMobileMenu()" class="md:hidden text-white text-2xl">
+        <i class="fas fa-bars"></i>
+    </button>
+</div>
+            </div>
+        </div>
+        
+        <!-- شريط البحث المنبثق -->
+<div id="searchBar" class="hidden border-t border-yellow-500/20 py-4">
+    <div class="container mx-auto px-4">
+        <div class="flex gap-3">
+            <div class="flex-1 search-container flex items-center px-4">
+                <i class="fas fa-search text-yellow-500 ml-3"></i>
+                <input type="text" id="globalSearch" placeholder="ابحث عن كوكبة، نجم، سديم، مجرة..." class="search-input">
+            </div>
+            <button onclick="toggleSearch()" class="px-4 text-gray-400 hover:text-white">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div id="globalSearchResults" class="search-results mt-2 hidden"></div>
+    </div>
+</div>
+    </nav>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="content container mx-auto px-4 py-4 md:py-8">
+        <!-- العنوان الرئيسي -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl md:text-6xl font-black mb-4">
+                <span class="text-yellow-400">الثقوب</span>
+                <span class="text-white"> السوداء</span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
+                وحوش الكون حيث الجاذبية لا ترحم، ولا حتى الضوء يستطيع الإفلات
+            </p>
+        </div>
+
+        <!-- ===== القسم الأول: مقدمة + فيديو 1 ===== -->
+        <div class="glass-card p-6 mb-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                    <h2 class="text-2xl md:text-3xl font-bold mb-4 text-yellow-400">
+                        <i class="fas fa-circle ml-2"></i>
+                        ما هو الثقب الأسود؟
+                    </h2>
+                    <p class="text-gray-300 leading-relaxed mb-4">
+                        الثقب الأسود هو منطقة في الفضاء ذات جاذبية هائلة لدرجة أنه لا يمكن لأي شيء الإفلات منها، 
+                        حتى الضوء. يتشكل عندما ينهار نجم ضخم على نفسه في نهاية حياته، مما يخلق كثافة لا متناهية في نقطة تسمى "التفرد".
+                    </p>
+                    <p class="text-gray-300 leading-relaxed">
+                        أفق الحدث هو الحدود المحيطة بالثقب الأسود، وأي شيء يعبرها لا يمكنه العودة أبداً. 
+                        الثقوب السوداء لا يمكن رؤيتها مباشرة، لكن نستدل عليها من تأثيرها على المادة المحيطة بها.
+                    </p>
+                    
+                    <div class="info-box mt-4">
+                        <i class="fas fa-lightbulb text-yellow-400 ml-2"></i>
+                        <span class="text-white">هل تعلم؟</span>
+                        <p class="text-gray-400 text-sm mt-2">
+                            أول صورة حقيقية لثقب أسود كانت في 10 أبريل 2019، لثقب أسود في مجرة M87، 
+                            على بعد 53 مليون سنة ضوئية من الأرض.
+                        </p>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="video-container">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/dGEIsnBRWGs" 
+                                title="ما هو الثقب الأسود" frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen></iframe>
+                    </div>
+                    <p class="text-center text-gray-400 text-sm mt-2">فيديو: شرح مبسط للثقوب السوداء</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== القسم الثاني: أنواع الثقوب السوداء ===== -->
+        <div class="glass-card p-6 mb-8">
+            <h2 class="text-2xl md:text-3xl font-bold mb-6 text-yellow-400">
+                <i class="fas fa-sitemap ml-2"></i>
+                أنواع الثقوب السوداء
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- نجمي -->
+                <div class="type-card">
+                    <div class="type-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">ثقب أسود نجمي</h3>
+                    <p class="text-gray-400 text-sm mb-3">
+                        يتكون من انهيار نجم ضخم (أكبر من 20 كتلة شمسية). كتلته تتراوح بين 3 إلى 100 كتلة شمسية.
+                    </p>
+                    <div class="bg-yellow-500/10 p-2 rounded-lg">
+                        <span class="text-yellow-400 text-sm">أمثلة:</span>
+                        <p class="text-white text-sm">Cygnus X-1، GRO J1655-40</p>
+                    </div>
+                </div>
+                
+                <!-- فائق الكتلة -->
+                <div class="type-card">
+                    <div class="type-icon">
+                        <i class="fas fa-galaxy"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">ثقب أسود فائق الكتلة</h3>
+                    <p class="text-gray-400 text-sm mb-3">
+                        موجود في مراكز المجرات، كتلته تتراوح بين ملايين إلى مليارات الكتل الشمسية.
+                    </p>
+                    <div class="bg-yellow-500/10 p-2 rounded-lg">
+                        <span class="text-yellow-400 text-sm">أمثلة:</span>
+                        <p class="text-white text-sm">القوس A* (في مركز درب التبانة)، M87</p>
+                    </div>
+                </div>
+                
+                <!-- متوسط -->
+                <div class="type-card">
+                    <div class="type-icon">
+                        <i class="fas fa-circle"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">ثقب أسود متوسط الكتلة</h3>
+                    <p class="text-gray-400 text-sm mb-3">
+                        نادر الوجود، كتلته بين 100 إلى 100,000 كتلة شمسية. يعتقد أنها نوى العناقيد النجمية.
+                    </p>
+                    <div class="bg-yellow-500/10 p-2 rounded-lg">
+                        <span class="text-yellow-400 text-sm">أمثلة:</span>
+                        <p class="text-white text-sm">HLX-1، 3XMM J2150-0551</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- أشهر الثقوب السوداء -->
+            <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3">
+                <div class="bg-black/40 p-3 rounded-lg text-center">
+                    <div class="text-yellow-400 font-bold">القوس A*</div>
+                    <div class="text-xs text-gray-400">4 ملايين كتلة شمسية</div>
+                </div>
+                <div class="bg-black/40 p-3 rounded-lg text-center">
+                    <div class="text-yellow-400 font-bold">M87</div>
+                    <div class="text-xs text-gray-400">6.5 مليار كتلة شمسية</div>
+                </div>
+                <div class="bg-black/40 p-3 rounded-lg text-center">
+                    <div class="text-yellow-400 font-bold">TON 618</div>
+                    <div class="text-xs text-gray-400">66 مليار كتلة شمسية</div>
+                </div>
+                <div class="bg-black/40 p-3 rounded-lg text-center">
+                    <div class="text-yellow-400 font-bold">Cygnus X-1</div>
+                    <div class="text-xs text-gray-400">21 كتلة شمسية</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== القسم الثالث: فيديو 2 ===== -->
+        <div class="glass-card p-6 mb-8">
+            <h2 class="text-2xl md:text-3xl font-bold mb-4 text-yellow-400">
+                <i class="fas fa-video ml-2"></i>
+                رحلة داخل الثقب الأسود
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                    <div class="video-container">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/8GnSFAZD8YY" 
+                                title="رحلة داخل الثقب الأسود" frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div>
+                    <p class="text-gray-300 leading-relaxed">
+                        ماذا يحدث إذا سقطت داخل ثقب أسود؟ في هذا الفيديو، نأخذك في رحلة افتراضية نحو أفق الحدث، 
+                        حيث الزمكان يلتوي والمادة تتفكك. نستعرض ظاهرة "السباغيتي" (Spaghettification) حيث 
+                        قوى المد تجذب الجسم وتمططه مثل المعكرونة.
+                    </p>
+                    <div class="info-box mt-4">
+                        <i class="fas fa-clock text-yellow-400 ml-2"></i>
+                        <span class="text-white">نظرية النسبية:</span>
+                        <p class="text-gray-400 text-sm mt-2">
+                            من منظور خارجي، الأجسام التي تقترب من أفق الحدث تبدو وكأنها تتباطأ ولا تعبره أبداً، 
+                            بينما من منظور الساقط، الوقت يمر بشكل طبيعي.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== القسم الرابع: صوت الثقوب السوداء ===== -->
+        <div class="glass-card p-6 mb-8">
+            <h2 class="text-2xl md:text-3xl font-bold mb-4 text-yellow-400">
+                <i class="fas fa-music ml-2"></i>
+                صوت الثقوب السوداء
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                    <p class="text-gray-300 leading-relaxed mb-4">
+                        في الفضاء، لا ينتقل الصوت لأن الوسط (الهواء) غير موجود. لكن ناسا وغيرها من الوكالات 
+                        تقوم بتحويل الموجات الكهرومغناطيسية وموجات الجاذبية إلى أصوات مسموعة، 
+                        في عملية تسمى "السمعنة" (Sonification).
+                    </p>
+                    <p class="text-gray-300 leading-relaxed mb-4">
+                        يمكن أخذ البيانات القادمة من الثقوب السوداء وتحليلها باستخدام لغات البرمجة مثل Python، 
+                        ثم تحويلها إلى ترددات صوتية. هذا يسمح لنا "بسماع" همسات الكون.
+                    </p>
+                    <div class="info-box">
+                        <i class="fas fa-code text-yellow-400 ml-2"></i>
+                        <span class="text-white">التحويل البرمجي:</span>
+                        <p class="text-gray-400 text-sm mt-2">
+                            باستخدام مكتبات مثل NumPy و SciPy، يمكن تحويل موجات الجاذبية إلى ملفات WAV 
+                            وسماع صوت اندماج الثقوب السوداء!
+                        </p>
+                    </div>
+                </div>
+                <div>
+                    <div class="video-container">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/_tXhBLg3Wng?si=6xwpu4-6CF6h46xA" 
+                                title="صوت الثقب الأسود" frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen></iframe>
+                    </div>
+                    <p class="text-center text-gray-400 text-sm mt-2">فيديو: صوت الثقب الأسود (محوّل)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== القسم الخامس: القوانين الفيزيائية ===== -->
+        <div class="glass-card p-6 mb-8">
+            <h2 class="text-2xl md:text-3xl font-bold mb-6 text-yellow-400">
+                <i class="fas fa-square-root-alt ml-2"></i>
+                القوانين الفيزيائية للثقوب السوداء
+            </h2>
+            
+            <!-- القانون 1: سرعة الإفلات -->
+            <div class="law-card">
+                <div class="law-title">
+                    <i class="fas fa-rocket ml-2"></i>
+                    1. سرعة الإفلات (Escape Velocity)
+                </div>
+                <p class="text-gray-300 mb-3">
+                    سرعة الإفلات هي السرعة اللازمة لجسم ليهرب من جاذبية جسم سماوي. قانونها مستمد من قانوني الجاذبية والطاقة الحركية.
+                </p>
+                
+                <div class="law-equation">
+                    \[
+                    E_k = \frac{1}{2}mv^2 \quad,\quad U = -\frac{GMm}{r}
+                    \]
+                </div>
+                
+                <p class="text-gray-300 mb-3">
+                    بمساواة الطاقة الحركية مع طاقة الوضع الجاذبية (للهروب):
+                </p>
+                
+                <div class="law-equation">
+                    \[
+                    \frac{1}{2}mv^2 = \frac{GMm}{r} \implies v_{esc} = \sqrt{\frac{2GM}{r}}
+                    \]
+                </div>
+                
+                <p class="text-gray-300">
+                    إذا كانت \( v_{esc} > c \) (سرعة الضوء)، حتى الضوء لا يستطيع الهروب، وهذا بالضبط ما يحدث في الثقب الأسود.
+                </p>
+            </div>
+            
+            <!-- القانون 2: نصف قطر شفارتزشيلد -->
+            <div class="law-card">
+                <div class="law-title">
+                    <i class="fas fa-ruler ml-2"></i>
+                    2. نصف قطر شفارتزشيلد (Schwarzschild Radius)
+                </div>
+                <p class="text-gray-300 mb-3">
+                    نصف القطر الذي إذا ضغطت كتلة \(M\) داخله، تصبح ثقباً أسود. ينتج من جعل \( v_{esc} = c \).
+                </p>
+                
+                <div class="law-equation">
+                    \[
+                    c = \sqrt{\frac{2GM}{r_s}} \implies r_s = \frac{2GM}{c^2}
+                    \]
+                </div>
+                
+                <p class="text-gray-300 mb-3">
+                    بالنسبة لشمسنا، كتلتها \( 1.99 \times 10^{30} \) كغم، نصف قطر شفارتزشيلد هو:
+                </p>
+                
+                <div class="law-equation">
+                    \[
+                    r_s = \frac{2 \times 6.67 \times 10^{-11} \times 1.99 \times 10^{30}}{(3 \times 10^8)^2} \approx 3 \text{ كم}
+                    \]
+                </div>
+                
+                <p class="text-gray-300">
+                    أي لو ضغطنا الشمس إلى كرة نصف قطرها 3 كيلومترات فقط، لتحولت إلى ثقب أسود!
+                </p>
+            </div>
+            
+            <!-- القانون 3: إشعاع هوكينغ -->
+            <div class="law-card">
+                <div class="law-title">
+                    <i class="fas fa-fire ml-2"></i>
+                    3. إشعاع هوكينغ (Hawking Radiation)
+                </div>
+                <p class="text-gray-300 mb-3">
+                    درجة حرارة الثقب الأسود تتناسب عكسياً مع كتلته. الثقوب السوداء الأصغر تكون أسخن وتتبخر أسرع.
+                </p>
+                
+                <div class="law-equation">
+                    \[
+                    T = \frac{\hbar c^3}{8\pi G M k_B}
+                    \]
+                </div>
+                
+                <p class="text-gray-300 mb-3">
+                    كلما زادت الكتلة \(M\)، قلت الحرارة \(T\).
+                </p>
+                
+                <div class="bg-black/40 p-3 rounded-lg">
+                    <span class="text-yellow-400">مثال:</span>
+                    <p class="text-white text-sm">ثقب أسود بكتلة شمسية له حرارة 60 نانو كلفن فقط (أبرد من الفضاء!)</p>
+                </div>
+            </div>
+            
+            <!-- القانون 4: مبدأ الريبة والجسيمات الافتراضية -->
+            <div class="law-card">
+                <div class="law-title">
+                    <i class="fas fa-atom ml-2"></i>
+                    4. مبدأ الريبة لهايزنبرغ والجسيمات الافتراضية
+                </div>
+                <p class="text-gray-300 mb-3">
+                    مبدأ الريبة للطاقة والزمن: \(\Delta E \cdot \Delta t \approx \hbar\)
+                </p>
+                
+                <div class="law-equation">
+                    \[
+                    \Delta E \cdot \Delta t \geq \frac{\hbar}{2}
+                    \]
+                </div>
+                
+                <p class="text-gray-300 mb-3">
+                    هذا يسمح بانبثاق أزواج من الجسيمات الافتراضية (جسيم - مضاد جسيم) من الفراغ لفترات قصيرة جداً.
+                </p>
+                
+                <p class="text-gray-300 mb-3">
+                    بالقرب من أفق الحدث، يمكن أن ينفصل الزوج، حيث يسقط أحد الجسيمات في الثقب الأسود بينما يهرب الآخر. 
+                    الجسيم الهارب يبدو كإشعاع صادر من الثقب الأسود، والجسيم الساقط له كتلة موجبة، 
+                    مما يعني أن الثقب الأسود يفقد كتلة (طاقة) تدريجياً. هذا هو إشعاع هوكينغ.
+                </p>
+                
+                <div class="info-box mt-3">
+                    <i class="fas fa-balance-scale text-yellow-400 ml-2"></i>
+                    <span class="text-white">المعادلة:</span>
+                    <p class="text-gray-400 text-sm mt-2">
+                        قانون النسبية: \( E = mc^2 \) يربط بين فقدان الطاقة والكتلة. بينما قانون هوكينغ يصف العملية.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== القسم السادس: فيديو إضافي (للصوت) ===== -->
+        <!-- <div class="glass-card p-6 mb-8">
+            <h2 class="text-2xl md:text-3xl font-bold mb-4 text-yellow-400">
+                <i class="fas fa-headphones ml-2"></i>
+                استمع إلى الكون
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                    <div class="video-container">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/8GnSFAZD8YY" 
+                                title="صوت الثقوب السوداء" frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div>
+                    <p class="text-gray-300 leading-relaxed">
+                        هذا الفيديو يوضح كيف تم تحويل موجات الجاذبية الصادرة عن اندماج ثقبين أسودين (الحدث GW150914) 
+                        إلى صوت مسموع. ما تسمعه هو ترددات موجات الجاذبية مرفوعة إلى نطاق السمع البشري.
+                    </p>
+                    <p class="text-gray-300 leading-relaxed mt-3">
+                        "الصوت" الذي نسمعه ليس صوتاً حقيقياً في الفضاء، بل هو ترجمة للبيانات إلى موجات صوتية 
+                        تسمح لنا "بالشعور" بالأحداث الكونية الهائلة.
+                    </p>
+                </div>
+            </div>
+        </div> -->
+
+        <!-- ملخص سريع -->
+        <div class="glass-card p-6 text-center">
+            <h3 class="text-xl font-bold text-yellow-400 mb-3">خلاصة القوانين</h3>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-3 text-sm">
+                <div class="bg-black/40 p-2 rounded-lg">
+                    <span class="text-yellow-400">سرعة الإفلات:</span>
+                    <div class="text-white">\(v_{esc} = \sqrt{\frac{2GM}{r}}\)</div>
+                </div>
+                <div class="bg-black/40 p-2 rounded-lg">
+                    <span class="text-yellow-400">نصف قطر شفارتزشيلد:</span>
+                    <div class="text-white">\(r_s = \frac{2GM}{c^2}\)</div>
+                </div>
+                <div class="bg-black/40 p-2 rounded-lg">
+                    <span class="text-yellow-400">حرارة هوكينغ:</span>
+                    <div class="text-white">\(T \propto 1/M\)</div>
+                </div>
+                <div class="bg-black/40 p-2 rounded-lg">
+                    <span class="text-yellow-400">مبدأ الريبة:</span>
+                    <div class="text-white">\(\Delta E \Delta t \geq \hbar/2\)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- فوتر -->
+    <footer class="border-t border-yellow-500/20 py-4 mt-8">
+        <div class="container mx-auto px-4 text-center text-gray-400 text-sm">
+            <p>الموسوعة الفلكية - الثقوب السوداء: ألغاز الكون العظيمة</p>
+        </div>
+    </footer>
+    <script src="index.js"></script>
+    </body>
+    </html>

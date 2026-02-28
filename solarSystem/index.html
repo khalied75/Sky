@@ -1,0 +1,720 @@
+ <html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>المجموعة الشمسية - الموسوعة الفلكية</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Tajawal', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0a0f1e 0%, #0b1a2e 50%, #0f212f 100%);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* خلفية النجوم */
+        .stars, .twinkling {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .stars {
+            background: #000 url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48Y2lyY2xlIGN4PSI2IiBjeT0iMTQiIHI9IjEiIGZpbGw9IndoaXRlIiAvPjxjaXJjbGUgY3g9IjE2MCIgY3k9IjYwIiByPSIxLjUiIGZpbGw9IndoaXRlIiAvPjxjaXJjbGUgY3g9IjQwIiBjeT0iMjAwIiByPSIxLjIiIGZpbGw9IndoaXRlIiAvPjwvc3ZnPg==') repeat;
+            background-size: 300px 300px;
+            opacity: 0.8;
+        }
+        
+        .twinkling {
+            background: transparent url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48Y2lyY2xlIGN4PSI4MCIgY3k9IjQwIiByPSIyIiBmaWxsPSIjZmZmZmZmIiBvcGFjaXR5PSIwLjgiIC8+PC9zdmc+') repeat;
+            background-size: 300px 300px;
+            animation: twinkle 4s ease-in-out infinite;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+        
+        .content {
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* ===== الناف بار الموحد ===== */
+        .glass-nav {
+            background: rgba(5, 10, 20, 0.95);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.15);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        
+        .nav-link {
+            color: #9ca3af;
+            transition: color 0.2s;
+            font-size: 1rem;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .nav-link:hover {
+            color: #ffd700;
+        }
+        
+        .nav-link.active {
+            color: #ffd700;
+            background: rgba(255, 215, 0, 0.1);
+        }
+        
+        .star-glow {
+            filter: drop-shadow(0 0 8px #ffd700);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); }
+        }
+        
+        /* القائمة الجانبية للموبايل */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 85%;
+            max-width: 350px;
+            height: 100vh;
+            background: rgba(5, 10, 20, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 1000;
+            transition: right 0.3s ease;
+            padding: 25px 20px;
+            border-left: 1px solid rgba(255, 215, 0, 0.2);
+            overflow-y: auto;
+        }
+        
+        .mobile-menu.open {
+            right: 0;
+        }
+        
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            z-index: 999;
+            display: none;
+        }
+        
+        .mobile-menu-overlay.open {
+            display: block;
+        }
+        
+        body.menu-open {
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+        }
+        
+        /* ===== تصميم المجموعة الشمسية ===== */
+        
+        /* بطاقات زجاجية */
+        .glass-card {
+            background: rgba(10, 15, 30, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            border-radius: 24px;
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            border-color: rgba(255, 215, 0, 0.4);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* خط زمني تاريخي */
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            right: 20px;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: rgba(255, 215, 0, 0.3);
+            border-radius: 4px;
+        }
+        
+        @media (min-width: 768px) {
+            .timeline::before {
+                right: 50%;
+                margin-right: -2px;
+            }
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-right: 50px;
+            margin-bottom: 30px;
+        }
+        
+        @media (min-width: 768px) {
+            .timeline-item {
+                width: 50%;
+                padding-right: 40px;
+            }
+            
+            .timeline-item:nth-child(odd) {
+                margin-right: 0;
+                margin-left: auto;
+                padding-right: 0;
+                padding-left: 40px;
+                text-align: left;
+            }
+            
+            .timeline-item:nth-child(odd) .timeline-content {
+                text-align: right;
+            }
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            right: 10px;
+            width: 20px;
+            height: 20px;
+            background: #ffd700;
+            border-radius: 50%;
+            box-shadow: 0 0 20px #ffd700;
+        }
+        
+        @media (min-width: 768px) {
+            .timeline-dot {
+                right: -10px;
+            }
+            
+            .timeline-item:nth-child(odd) .timeline-dot {
+                right: auto;
+                left: -10px;
+            }
+        }
+        
+        .timeline-content {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 16px;
+            padding: 16px;
+        }
+        
+        /* بطاقات الكواكب */
+        .planet-card {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            border-radius: 20px;
+            padding: 16px;
+            transition: all 0.3s;
+            height: 100%;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .planet-card:hover {
+            border-color: #ffd700;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.2);
+        }
+        
+        .planet-card:hover .planet-icon {
+            transform: scale(1.2) rotate(10deg);
+        }
+        
+        .planet-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            transition: all 0.3s;
+        }
+        
+        /* الكواكب الداخلية (صخرية) */
+        .terrestrial .planet-icon {
+            color: #ffaa66;
+        }
+        
+        /* الكواكب الخارجية (غازية) */
+        .gas-giant .planet-icon {
+            color: #ffaa00;
+        }
+        
+        /* الكواكب الجليدية */
+        .ice-giant .planet-icon {
+            color: #66ccff;
+        }
+        
+        /* كوكب قزم */
+        .dwarf .planet-icon {
+            color: #cccccc;
+        }
+        
+        /* الشمس */
+        .sun-card {
+            background: linear-gradient(135deg, #ffaa00, #ff6600);
+            border: none;
+            box-shadow: 0 0 50px rgba(255, 200, 0, 0.3);
+        }
+        
+        /* شريط البحث */
+        .search-container {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 50px;
+            transition: all 0.2s;
+        }
+        
+        .search-container:focus-within {
+            border-color: #ffd700;
+            background: rgba(20, 15, 30, 0.8);
+        }
+        
+        .search-input {
+            background: transparent;
+            border: none;
+            color: white;
+            padding: 12px 16px;
+            width: 100%;
+            font-size: 0.95rem;
+        }
+        
+        .search-input:focus {
+            outline: none;
+        }
+        
+        .search-results {
+            background: rgba(15, 10, 25, 0.98);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 16px;
+            max-height: 300px;
+            overflow-y: auto;
+            position: absolute;
+            width: 100%;
+            z-index: 100;
+            margin-top: 5px;
+        }
+        
+        .search-result-item {
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+            cursor: pointer;
+        }
+        
+        .search-result-item:hover {
+            background: rgba(255, 215, 0, 0.1);
+        }
+        
+        /* أزرار التصفية */
+        .filter-btn {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 30px;
+            transition: all 0.2s;
+            cursor: pointer;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+        
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: #ffd700;
+        }
+        
+        .filters-scroll {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            padding-bottom: 8px;
+        }
+        
+        .filters-scroll::-webkit-scrollbar {
+            display: none;
+        }
+        
+        /* معلومات الكوكب */
+        .planet-info {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 8px;
+            margin-top: 8px;
+            font-size: 0.8rem;
+        }
+        
+        .planet-info span {
+            color: #ffd700;
+            font-weight: bold;
+        }
+        
+        .sun-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .sun-stat {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 5px;
+            text-align: center;
+            font-size: 0.7rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- خلفية النجوم -->
+    <div class="stars"></div>
+    <div class="twinkling"></div>
+
+    <!-- القائمة الجانبية للموبايل -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-2xl font-bold text-yellow-400">القائمة</h2>
+            <button onclick="closeMobileMenu()" class="text-white text-2xl w-12 h-12 flex items-center justify-center hover:bg-yellow-500/20 rounded-full transition">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="text-center mb-8">
+            <div class="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center mb-3">
+                <i class="fas fa-globe text-5xl text-black"></i>
+            </div>
+            <h3 class="text-white font-bold">الموسوعة الفلكية</h3>
+            <p class="text-gray-400 text-sm">اكتشف أسرار الكون</p>
+        </div>
+        
+        <nav class="flex flex-col gap-2">
+            <a href="index.html" class="text-white text-lg py-3 px-4 rounded-xl hover:bg-yellow-500/20 transition flex items-center gap-3">
+                <i class="fas fa-home text-yellow-400 w-6"></i>
+                <span>الرئيسية</span>
+            </a>
+            
+            <div class="border-b border-yellow-500/10 pb-2">
+                <div class="text-yellow-400 text-sm px-4 py-2">الكون</div>
+                <a href="../patterns/index.html" class="text-white text-lg py-3 pr-12 px-4 rounded-xl hover:bg-yellow-500/20 transition flex items-center gap-3">
+                    <i class="fas fa-star text-yellow-400 w-6"></i>
+                    <span>الكوكبات</span>
+                    <span class="mr-auto text-sm text-gray-400">88</span>
+                </a>
+                <a href="../stars/index.html" class="text-white text-lg py-3 pr-12 px-4 rounded-xl hover:bg-yellow-500/20 transition flex items-center gap-3">
+                    <i class="fas fa-sun text-yellow-400 w-6"></i>
+                    <span>النجوم</span>
+                    <span class="mr-auto text-sm text-gray-400">200+</span>
+                </a>
+                <a href="../Nebula/" class="text-white text-lg py-3 pr-12 px-4 rounded-xl hover:bg-yellow-500/20 transition flex items-center gap-3">
+                    <i class="fas fa-cloud text-yellow-400 w-6"></i>
+                    <span>السدم</span>
+                    <span class="mr-auto text-sm text-gray-400">20+</span>
+                </a>
+                <a href="../galaxies/index.html" class="text-white text-lg py-3 pr-12 px-4 rounded-xl hover:bg-yellow-500/20 transition flex items-center gap-3">
+                    <i class="fas fa-galaxy text-yellow-400 w-6"></i>
+                    <span>المجرات</span>
+                    <span class="mr-auto text-sm text-gray-400">30+</span>
+                </a>
+            </div>
+            
+            <div class="border-b border-yellow-500/10 pb-2">
+                <div class="text-yellow-400 text-sm px-4 py-2">الظواهر الكونية</div>
+                <a href="../blackHole/index.html" class="text-white text-lg py-3 pr-12 px-4 rounded-xl hover:bg-yellow-500/20 transition flex items-center gap-3">
+                    <i class="fas fa-circle text-yellow-400 w-6"></i>
+                    <span>الثقوب السوداء</span>
+                </a>
+                <a href="index.html" class="text-white text-lg py-3 pr-12 px-4 rounded-xl hover:bg-yellow-500/20 transition flex items-center gap-3 bg-yellow-500/20">
+                    <i class="fas fa-solar-system text-yellow-400 w-6"></i>
+                    <span>المجموعة الشمسية</span>
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- الناف بار الرئيسي -->
+    <nav class="glass-nav sticky top-0 z-30">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-16 md:h-20">
+                <!-- الشعار -->
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-meteor text-yellow-400 text-2xl star-glow"></i>
+                    <a href="index.html" class="text-xl font-bold text-white">
+                        <span class="text-yellow-400">الفلك</span> بيديا
+                    </a>
+                </div>
+                
+                <!-- القائمة الرئيسية -->
+                <div class="hidden md:flex items-center gap-1">
+                    <a href="../index.html" class="nav-link flex items-center gap-2">
+                        <i class="fas fa-home"></i>
+                        <span>الرئيسية</span>
+                    </a>
+                    <a href="../patterns/index.html" class="nav-link flex items-center gap-2">
+                        <i class="fas fa-star"></i>
+                        <span>الكوكبات</span>
+                    </a>
+                    <a href="../stars/index.html" class="nav-link flex items-center gap-2">
+                        <i class="fas fa-sun"></i>
+                        <span>النجوم</span>
+                    </a>
+                    <a href="../Nebula/index.html" class="nav-link flex items-center gap-2">
+                        <i class="fas fa-cloud"></i>
+                        <span>السدم</span>
+                    </a>
+                    <a href="../galaxies/index.html" class="nav-link flex items-center gap-2">
+                        <i class="fas fa-galaxy"></i>
+                        <span>المجرات</span>
+                    </a>
+                </div>
+                
+                <!-- أيقونات يمنى -->
+              <!-- أيقونات يمنى - زر البحث -->
+<div class="flex items-center gap-3">
+    <!-- زر البحث للديسكتوب -->
+    <button onclick="toggleSearch()" class="hidden md:block text-white hover:text-yellow-400 text-xl">
+        <i class="fas fa-search"></i>
+    </button>
+    
+    <!-- زر القائمة للموبايل -->
+    <button onclick="openMobileMenu()" class="md:hidden text-white text-2xl">
+        <i class="fas fa-bars"></i>
+    </button>
+</div>
+            </div>
+        </div>
+        
+        <!-- شريط البحث المنبثق -->
+    <div id="searchBar" class="hidden border-t border-yellow-500/20 py-4">
+    <div class="container mx-auto px-4">
+        <div class="flex gap-3">
+            <div class="flex-1 search-container flex items-center px-4">
+                <i class="fas fa-search text-yellow-500 ml-3"></i>
+                <input type="text" id="globalSearch" placeholder="ابحث عن كوكبة، نجم، سديم، مجرة..." class="search-input">
+            </div>
+            <button onclick="toggleSearch()" class="px-4 text-gray-400 hover:text-white">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div id="globalSearchResults" class="search-results mt-2 hidden"></div>
+    </div>
+</div>
+    </nav>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="content container mx-auto px-4 py-4 md:py-8">
+        <!-- رأس الصفحة -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl md:text-6xl font-black mb-4">
+                <span class="text-yellow-400">المجموعة</span>
+                <span class="text-white"> الشمسية</span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
+                رحلة عبر التاريخ: من أرسطو إلى نيوتن، واكتشاف الكواكب التسعة
+            </p>
+        </div>
+
+        <!-- ===== القسم الأول: الشمس ===== -->
+        <div class="glass-card p-6 mb-8">
+            <h2 class="text-2xl md:text-3xl font-bold mb-4 text-yellow-400">
+                <i class="fas fa-sun ml-2"></i>
+                الشمس - قلب المجموعة
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="lg:col-span-2">
+                    <p class="text-gray-300 leading-relaxed mb-4">
+                        الشمس هي النجم المركزي للمجموعة الشمسية. وهي تقريباً كروية وتحوي بلازما حارة متشابكة مع الحقل المغناطيسي. يبلغ قطرها حوالي 1,392,684 كيلومتر، وهو ما يعادل 109 أضعاف قطر الأرض، وكتلتها 2×10³⁰ كيلوغرام وهو ما يعادل 330,000 ضعف كتلة الأرض، ويشكل ذلك نسبة 99.86% من كتلة المجموعة الشمسية بأكملها [citation:2].
+                    </p>
+                    <p class="text-gray-300 leading-relaxed mb-4">
+                        الشمس هي إحدى نجوم مجرتنا - مجرة درب التبانة - التي تحوي تقريباً نحو 200 مليار نجم. من الناحية الكيميائية، يشكل الهيدروجين ثلاثة أرباع مكونات كتلة الشمس، أما البقية فهي في معظمها هيليوم مع وجود نسبة 1.69% من العناصر الأثقل [citation:2].
+                    </p>
+                </div>
+                <div class="sun-card rounded-2xl p-6 text-center">
+                    <i class="fas fa-sun text-6xl text-yellow-300 mb-3"></i>
+                    <h3 class="text-xl font-bold text-white mb-3">حقائق سريعة</h3>
+                    <div class="sun-stats">
+                        <div class="sun-stat">
+                            <span class="text-yellow-400">الكتلة</span>
+                            <div class="text-white">333,000 × الأرض</div>
+                        </div>
+                        <div class="sun-stat">
+                            <span class="text-yellow-400">القطر</span>
+                            <div class="text-white">109 × الأرض</div>
+                        </div>
+                        <div class="sun-stat">
+                            <span class="text-yellow-400">الحرارة</span>
+                            <div class="text-white">5,778 كلفن</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== القسم الثاني: تاريخ تطور النموذج الكوني ===== -->
+        <div class="glass-card p-6 mb-8">
+            <h2 class="text-2xl md:text-3xl font-bold mb-6 text-yellow-400">
+                <i class="fas fa-history ml-2"></i>
+                تاريخ تطور النموذج الكوني
+            </h2>
+            
+            <div class="timeline">
+                <!-- أرسطو -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3 class="text-xl font-bold text-yellow-400 mb-2">أرسطو (384-322 ق.م)</h3>
+                        <p class="text-gray-300">
+                            كان أرسطو أول من قدم نموذجاً كونياً شاملاً. اعتقد أن الأرض ثابتة في مركز الكون، وأن جميع الأجرام السماوية بما فيها الشمس تدور حولها في أفلاك كروية مثالية. استند نموذجه الجيوسنترية (مركزية الأرض) إلى الملاحظات اليومية لحركة الشمس والقمر والنجوم، وسيطر هذا النموذج على الفكر البشري لأكثر من 2000 سنة [citation:1].
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- بطليموس -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3 class="text-xl font-bold text-yellow-400 mb-2">بطليموس (100-170 م)</h3>
+                        <p class="text-gray-300">
+                            طور بطليموس نموذج أرسطو في كتابه "المجسطي". أضاف نظام الأفلاك التدويرية (Epicycles) لتفسير الحركات التراجعية للكواكب. ظل نموذجه المرجع الرئيسي في علم الفلك لمدة 1400 سنة، واعتمدته الكنيسة والثقافة الإسلامية في العصور الوسطى [citation:1].
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- غاليليو -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3 class="text-xl font-bold text-yellow-400 mb-2">غاليليو غاليلي (1564-1642)</h3>
+                        <p class="text-gray-300">
+                            في القرن السابع عشر، استخدم غاليليو التلسكوب لأول مرة لرصد السماء. اكتشف أقمار المشتري الأربعة (دليل على أن ليست كل الأجرام تدور حول الأرض)، ورصد أطوار الزهرة الكاملة (مما يدعم نموذج مركزية الشمس). دعم نموذج كوبرنيكوس القائل بدوران الأرض حول الشمس، مما عرضه لمحاكمة من الكنيسة [citation:1].
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- نيوتن -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3 class="text-xl font-bold text-yellow-400 mb-2">إسحاق نيوتن (1643-1727)</h3>
+                        <p class="text-gray-300">
+                            أكمل نيوتن الثورة العلمية بقانون الجذب العام. أثبت أن نفس القوة التي تجعل التفاحة تسقط على الأرض هي التي تحافظ على القمر في مداره حول الأرض والكواكب حول الشمس. وحد قوانين كبلر لحركة الكواكب مع قوانينه، وقدم تفسيراً فيزيائياً للنظام الشمسي [citation:1].
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== القسم الثالث: الكواكب التسعة ===== -->
+        <div class="glass-card p-6 mb-8">
+            <h2 class="text-2xl md:text-3xl font-bold mb-4 text-yellow-400">
+                <i class="fas fa-globe ml-2"></i>
+                الكواكب التسعة (1930-2006)
+            </h2>
+            <p class="text-gray-300 mb-4">
+                بين عامي 1930 و2006، اعتُبر بلوتو الكوكب التاسع في المجموعة الشمسية. كان عدد الكواكب قبل 1930 ثمانية فقط، وبعد اكتشاف بلوتو أصبح العدد تسعة. في عام 2006، أعاد الاتحاد الفلكي الدولي تعريف مصطلح "كوكب"، مما أدى إلى إعادة تصنيف بلوتو كـ"كوكب قزم" [citation:7].
+            </p>
+            
+            <!-- الشمس بطاقة خاصة -->
+            <div class="sun-card rounded-2xl p-4 mb-4">
+                <div class="flex items-center gap-4">
+                    <i class="fas fa-sun text-5xl text-yellow-300"></i>
+                    <div>
+                        <h3 class="text-2xl font-bold text-white">الشمس</h3>
+                        <p class="text-gray-200">النجم المركزي - تشكل 99.86% من كتلة المجموعة</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- شبكة الكواكب التسعة -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 mt-4" id="planetsGrid">
+                <!-- الكواكب ستتح هنا عبر JavaScript -->
+            </div>
+            
+            <!-- ملاحظة عن بلوتو -->
+            <div class="bg-yellow-500/10 border border-yellow-500/20 rounded-2xl p-4 mt-4">
+                <p class="text-sm text-gray-300">
+                    <span class="text-yellow-400 font-bold">ملاحظة:</span> منذ عام 2006، صنف الاتحاد الفلكي الدولي بلوتو كـ"كوكب قزم". لكن لأهميته التاريخية، ندرجه هنا ضمن الكواكب التسعة الكلاسيكية [citation:7].
+                </p>
+            </div>
+        </div>
+
+        <!-- ===== القسم الرابع: حقائق إضافية ===== -->
+        <div class="glass-card p-6 mb-8">
+            <h2 class="text-xl md:text-2xl font-bold mb-4 text-yellow-400">
+                <i class="fas fa-star ml-2"></i>
+                حقائق سريعة عن المجموعة الشمسية
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-black/40 rounded-xl p-4">
+                    <i class="fas fa-clock text-yellow-400 ml-2"></i>
+                    <span class="text-white font-bold">العمر:</span>
+                    <p class="text-gray-300 text-sm mt-1">4.6 مليار سنة [citation:1]</p>
+                </div>
+                <div class="bg-black/40 rounded-xl p-4">
+                    <i class="fas fa-ruler text-yellow-400 ml-2"></i>
+                    <span class="text-white font-bold">القطر:</span>
+                    <p class="text-gray-300 text-sm mt-1">حوالي 9 مليار كيلومتر (حتى حزام كايبر)</p>
+                </div>
+                <div class="bg-black/40 rounded-xl p-4">
+                    <i class="fas fa-moon text-yellow-400 ml-2"></i>
+                    <span class="text-white font-bold">الأقمار:</span>
+                    <p class="text-gray-300 text-sm mt-1">أكثر من 200 قمر معروف [citation:1]</p>
+                </div>
+                <div class="bg-black/40 rounded-xl p-4">
+                    <i class="fas fa-ring text-yellow-400 ml-2"></i>
+                    <span class="text-white font-bold">الكواكب القزمة:</span>
+                    <p class="text-gray-300 text-sm mt-1">5 معترف بها رسمياً (سيريس، بلوتو، هاوميا، ماكيماكي، إيريس) [citation:7]</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- فوتر -->
+    <footer class="border-t border-yellow-500/20 py-4 mt-8">
+        <div class="container mx-auto px-4 text-center text-gray-400 text-sm">
+            <p>الموسوعة الفلكية - المجموعة الشمسية: رحلة عبر التاريخ والكواكب</p>
+        </div>
+    </footer>
+    <script src="index.js"></script>
+    </body>
+</html>
