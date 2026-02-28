@@ -393,7 +393,40 @@ function setupGlobalSearch() {
         }
     });
 }
+ // البحث العام
+        let searchBarVisible2 = false;
 
+        function toggleSearch() {
+            const searchBar = document.getElementById('searchBar');
+            searchBarVisible = !searchBarVisible;
+            
+            if (searchBarVisible) {
+                searchBar.classList.remove('hidden');
+                setTimeout(() => {
+                    document.getElementById('globalSearch')?.focus();
+                }, 100);
+            } else {
+                searchBar.classList.add('hidden');
+            }
+        }
+
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            displayNebulae();
+            setupNebulaSearch();
+            
+            document.querySelectorAll('.mobile-menu a').forEach(link => {
+                link.addEventListener('click', closeMobileMenu);
+            });
+            
+            document.addEventListener('click', function(e) {
+                const searchInput = document.getElementById('nebulaSearch');
+                const resultsDiv = document.getElementById('nebulaSearchResults');
+                if (searchInput && resultsDiv && !searchInput.contains(e.target) && !resultsDiv.contains(e.target)) {
+                    resultsDiv.classList.add('hidden');
+                }
+            });
+        }); 
 // تشغيل البحث عند تحميل الصفحة
 document.addEventListener('DOMContentLoaded', function() {
     setupGlobalSearch();
