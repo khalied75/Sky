@@ -155,5 +155,6 @@
                         quickResults.classList.add('hidden');
                     }
                 }
+
             });
         });
